@@ -1,2 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Welcome to HospiSafe Console Application!");
+        // Additional code for the console application can be added here.
+    }
+}

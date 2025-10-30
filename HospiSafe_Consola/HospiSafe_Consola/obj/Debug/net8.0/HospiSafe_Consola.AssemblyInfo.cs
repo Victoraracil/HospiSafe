@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HospiSafe_Consola")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b97f7fdf82227139709fd63d62e7c161d99d2539")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5fbd1774a8b0f554ae0e9c820fe4181c889487c7")]
 [assembly: System.Reflection.AssemblyProductAttribute("HospiSafe_Consola")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HospiSafe_Consola")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
