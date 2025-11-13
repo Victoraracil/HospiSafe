@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HospiSafe_WPF")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8a773672c9077917bba6d0c5c43aa40bd44fbc96")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+44392e4a1d3b1c1a4f7a9de1bbef68bdb7b491f4")]
 [assembly: System.Reflection.AssemblyProductAttribute("HospiSafe_WPF")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HospiSafe_WPF")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
