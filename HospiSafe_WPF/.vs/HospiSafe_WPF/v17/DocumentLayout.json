@@ -1,33 +1,33 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\",
+  "WorkspaceRootPath": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\ruben\\documents\\2dam\\proyecto intermodular\\1migracion\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\victor aracil\\desktop\\apuntes y proyectos\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|solutionrelative:hospisafe_wpf\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\ruben\\documents\\2dam\\proyecto intermodular\\1migracion\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\cita.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\victor aracil\\desktop\\apuntes y proyectos\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\cita.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|solutionrelative:hospisafe_wpf\\cita.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\ruben\\documents\\2dam\\proyecto intermodular\\1migracion\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\prueba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\victor aracil\\desktop\\apuntes y proyectos\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\prueba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|solutionrelative:hospisafe_wpf\\prueba.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\ruben\\documents\\2dam\\proyecto intermodular\\1migracion\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\paciente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\victor aracil\\desktop\\apuntes y proyectos\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\paciente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|solutionrelative:hospisafe_wpf\\paciente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\ruben\\documents\\2dam\\proyecto intermodular\\1migracion\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\victor aracil\\desktop\\apuntes y proyectos\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|solutionrelative:hospisafe_wpf\\persona.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\ruben\\documents\\2dam\\proyecto intermodular\\1migracion\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\victor aracil\\desktop\\apuntes y proyectos\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|solutionrelative:hospisafe_wpf\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\ruben\\documents\\2dam\\proyecto intermodular\\1migracion\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|c:\\users\\victor aracil\\desktop\\apuntes y proyectos\\hospisafe\\hospisafe_wpf\\hospisafe_wpf\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{56457CD1-37BA-4E55-9877-ED23207DDD44}|HospiSafe_WPF\\HospiSafe_WPF.csproj|solutionrelative:hospisafe_wpf\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -38,67 +38,67 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "Persona.cs",
-              "DocumentMoniker": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Persona.cs",
+              "DocumentMoniker": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Persona.cs",
               "RelativeDocumentMoniker": "HospiSafe_WPF\\Persona.cs",
-              "ToolTip": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Persona.cs",
+              "ToolTip": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Persona.cs",
               "RelativeToolTip": "HospiSafe_WPF\\Persona.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-04T17:16:02.728Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-04T17:16:02.728Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "Paciente.cs",
-              "DocumentMoniker": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Paciente.cs",
+              "DocumentMoniker": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Paciente.cs",
               "RelativeDocumentMoniker": "HospiSafe_WPF\\Paciente.cs",
-              "ToolTip": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Paciente.cs",
+              "ToolTip": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Paciente.cs",
               "RelativeToolTip": "HospiSafe_WPF\\Paciente.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAIBJwBQAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-04T17:13:46.676Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-04T17:13:46.676Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Prueba.cs",
-              "DocumentMoniker": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Prueba.cs",
+              "DocumentMoniker": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Prueba.cs",
               "RelativeDocumentMoniker": "HospiSafe_WPF\\Prueba.cs",
-              "ToolTip": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Prueba.cs",
+              "ToolTip": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Prueba.cs",
               "RelativeToolTip": "HospiSafe_WPF\\Prueba.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-04T17:14:35.528Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-04T17:14:35.528Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Cita.cs",
-              "DocumentMoniker": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Cita.cs",
+              "DocumentMoniker": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Cita.cs",
               "RelativeDocumentMoniker": "HospiSafe_WPF\\Cita.cs",
-              "ToolTip": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Cita.cs",
+              "ToolTip": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Cita.cs",
               "RelativeToolTip": "HospiSafe_WPF\\Cita.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-04T17:14:26.724Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-04T17:14:26.724Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Usuario.cs",
-              "DocumentMoniker": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Usuario.cs",
               "RelativeDocumentMoniker": "HospiSafe_WPF\\Usuario.cs",
-              "ToolTip": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Usuario.cs",
+              "ToolTip": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\Usuario.cs",
               "RelativeToolTip": "HospiSafe_WPF\\Usuario.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -109,9 +109,9 @@
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "MainWindow.xaml",
-              "DocumentMoniker": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\MainWindow.xaml",
               "RelativeDocumentMoniker": "HospiSafe_WPF\\MainWindow.xaml",
-              "ToolTip": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\MainWindow.xaml",
               "RelativeToolTip": "HospiSafe_WPF\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-11-13T16:23:46.017Z"
@@ -120,9 +120,9 @@
               "$type": "Document",
               "DocumentIndex": 6,
               "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "HospiSafe_WPF\\MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\RUBEN\\Documents\\2DAM\\Proyecto intermodular\\1Migracion\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\Victor Aracil\\Desktop\\Apuntes y proyectos\\HospiSafe\\HospiSafe_WPF\\HospiSafe_WPF\\MainWindow.xaml.cs",
               "RelativeToolTip": "HospiSafe_WPF\\MainWindow.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
