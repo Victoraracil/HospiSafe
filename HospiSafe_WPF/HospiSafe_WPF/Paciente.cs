@@ -13,9 +13,6 @@ namespace HospiSafe_WPF
         [Key]
         public int IdPaciente { get; set; }
 
-        [MaxLength(150)]
-        public string Direccion { get; set; }
-
         [Required]
         [StringLength(12, MinimumLength = 12)]
         [RegularExpression(@"^\d{12}$")]

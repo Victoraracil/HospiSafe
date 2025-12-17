@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace HospiSafe_WPF
 {
+    /*
+     * Hereda de persona con todos sus atributos
+     */
 
     public enum RolUsuario
     {
         Admin,
-        Personal,
-        Paciente
+        Personal
     }
-
-    public class Usuario
+    public class Usuario : Persona
     {
         [Key]
         public int IdUsuario { get; set; }
@@ -23,5 +24,10 @@ namespace HospiSafe_WPF
         [Required]
         public string PasswordHash { get; set; }
 
+        [Required]
+        public RolUsuario Rol { get; set; }
     }
+
+    
+
 }
