@@ -26,8 +26,10 @@ namespace HospiSafe_WPF
 
         [Required]
         public RolUsuario Rol { get; set; }
-    }
 
-    
+        
+        // Un usuario puede atender muchas citas
+        public virtual ICollection<Cita> Citas { get; set; } = new List<Cita>();
+    }
 
 }
