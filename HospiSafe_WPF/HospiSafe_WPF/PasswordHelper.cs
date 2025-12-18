@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 
 ///<author> Ruben Gumpert </author>
 
-namespace GestionTareas
+namespace HospiSafe_WPF
 {
     public static class PasswordHelper
     {
