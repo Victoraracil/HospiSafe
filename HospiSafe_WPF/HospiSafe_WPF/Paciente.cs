@@ -18,12 +18,8 @@ namespace HospiSafe_WPF
         [RegularExpression(@"^\d{12}$")]
         public string NumSS { get; set; }
 
-        /*
-        // Relación 1 a 1 con Usuario (opcional)
-        public int? IdUsuario { get; set; }
 
-        [ForeignKey("IdUsuario")]
-        public virtual Usuario Usuario { get; set; }
-        */
+        // Un paciente puede tener muchas citas
+        public virtual ICollection<Cita> Citas { get; set; } = new List<Cita>();
     }
 }
