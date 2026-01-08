@@ -1,14 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+using HospiSafe_WPF.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HospiSafe_WPF
+namespace HospiSafe_WPF.Services
 {
-    class ServicePaciente
+    public class ServicePaciente : IDisposable
     {
+        bool disposed;
+        public ServicePaciente()
+        {
+            disposed = false;
+        }
+
         public async Task<List<Paciente>> ListarPacientesAsync()
         {
             using (var context = new GestorDBContext())
@@ -62,7 +68,6 @@ namespace HospiSafe_WPF
                 if (existente == null)
                     return false;
 
-                // Actualizamos campos permitidos
                 existente.Nombre = paciente.Nombre;
                 existente.Apellidos = paciente.Apellidos;
                 existente.Telefono = paciente.Telefono;
@@ -92,6 +97,29 @@ namespace HospiSafe_WPF
                 await context.SaveChangesAsync();
                 return true;
             }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+            }
+
+            disposed = true;
+        }
+
+        ~ServicePaciente()
+        {
+            Dispose(false);
         }
     }
 }

@@ -1,16 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HospiSafe_WPF
+namespace HospiSafe_WPF.Models
 {
-    /*
-     * Hereda de persona con todos sus atributos
-     */
-
     public enum RolUsuario
     {
         Admin,
@@ -27,9 +20,6 @@ namespace HospiSafe_WPF
         [Required]
         public RolUsuario Rol { get; set; }
 
-        
-        // Un usuario puede atender muchas citas
         public virtual ICollection<Cita> Citas { get; set; } = new List<Cita>();
     }
-
 }

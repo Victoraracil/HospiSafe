@@ -1,14 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
+using HospiSafe_WPF.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace HospiSafe_WPF
+namespace HospiSafe_WPF.Services
 {
-    class ServiceUsuario
+    public class ServiceUsuario : IDisposable
     {
+        bool disposed;
+        public ServiceUsuario()
+        {
+            disposed = false;
+        }
+
         public async Task<Usuario?> LoginAsync(string correo, string passwordIntroducida)
         {
             using (var context = new GestorDBContext())
@@ -19,13 +25,12 @@ namespace HospiSafe_WPF
                 if (usuario == null)
                     return null;
 
-                //El usuario existe, comprobamos ahora la password
                 string passwordHashIn = PasswordHelper.HashPassword(passwordIntroducida);
 
                 if (passwordHashIn != usuario.PasswordHash)
                     return null;
 
-                return usuario; //Se ha logueado
+                return usuario;
             }
         }
 
@@ -60,6 +65,29 @@ namespace HospiSafe_WPF
                 await context.SaveChangesAsync();
                 return true;
             }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+            }
+
+            disposed = true;
+        }
+
+        ~ServiceUsuario()
+        {
+            Dispose(false);
         }
     }
 }

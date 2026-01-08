@@ -1,12 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HospiSafe_WPF
+namespace HospiSafe_WPF.Models
 {
     public class Paciente : Persona
     {
@@ -18,8 +14,6 @@ namespace HospiSafe_WPF
         [RegularExpression(@"^\d{12}$")]
         public string NumSS { get; set; }
 
-
-        // Un paciente puede tener muchas citas
         public virtual ICollection<Cita> Citas { get; set; } = new List<Cita>();
     }
 }

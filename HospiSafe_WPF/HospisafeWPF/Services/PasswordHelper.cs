@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-//Para el SHA256
+using System;
 using System.Security.Cryptography;
+using System.Text;
 
-
-///<author> Ruben Gumpert </author>
-
-namespace HospiSafe_WPF
+namespace HospiSafe_WPF.Services
 {
     public static class PasswordHelper
     {
@@ -23,11 +16,8 @@ namespace HospiSafe_WPF
             {
                 using (SHA256 sha = SHA256.Create())
                 {
-                    // hash trabajan con bytes, pasamos password a bytes
                     byte[] bytes = Encoding.UTF8.GetBytes(password);
-                    // array de byes con la contraseña hasheadaX
                     byte[] hash = sha.ComputeHash(bytes);
-                    // Devuelve el hash en formato hexadecimal
                     return Convert.ToHexString(hash);
                 }
             }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HospiSafe_WPF
+namespace HospiSafe_WPF.Models
 {
     public abstract class Persona
     {
@@ -32,4 +28,3 @@ namespace HospiSafe_WPF
         public string CorreoElectronico { get; set; }
     }
 }
-
