@@ -27,9 +27,9 @@ namespace HospiSafe_WPF.ViewModels
             LoginCommand = new RelayCommand(ExecuteLogin);
         }
 
-        private async void ExecuteLogin(object parameter)
+        private async void ExecuteLogin(object? parameter = null)
         {
-            /*if (parameter is PasswordBox passwordBox)
+            /*if (parameter is PasswordBox passwordBox) //Comprueba el tipo y crea la variable automaticamente
             {
                 using (var service = new ServiceUsuario())
                 {
