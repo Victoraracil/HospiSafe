@@ -8,6 +8,7 @@ namespace HospiSafe_WPF.Views
         public LoginView()
         {
             InitializeComponent();
+            DataContext = new LoginViewModel();
         }
     }
 }
