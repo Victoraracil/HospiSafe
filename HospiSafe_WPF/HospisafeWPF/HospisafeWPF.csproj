@@ -7,17 +7,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.11"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.11"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.11">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Remove="HospiSafe_WPF\**"/>
-    <EmbeddedResource Remove="HospiSafe_WPF\**"/>
-    <None Remove="HospiSafe_WPF\**"/>
-    <Page Remove="HospiSafe_WPF\**"/>
+    <Compile Remove="HospiSafe_WPF\**" />
+    <EmbeddedResource Remove="HospiSafe_WPF\**" />
+    <None Remove="HospiSafe_WPF\**" />
+    <Page Remove="HospiSafe_WPF\**" />
   </ItemGroup>
 </Project>

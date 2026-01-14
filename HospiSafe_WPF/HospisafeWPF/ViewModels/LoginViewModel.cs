@@ -14,6 +14,23 @@ namespace HospiSafe_WPF.ViewModels
     {
         private string _correo;
 
+        Usuario nuevoUsuario = new Usuario
+        {
+            Nombre = "Juan",
+            Apellidos = "Pérez Gómez",
+            DNI = "12345678A",
+            FechaNacimiento = new DateTime(1995, 5, 20),
+            Telefono = "600123456",
+            CorreoElectronico = "admin",
+
+            // IMPORTANTE: aquí va la contraseña en texto plano
+            // El método ya se encarga de hacer el hash
+            PasswordHash = "admin",
+
+            Rol = RolUsuario.Admin // o Admin, según tu enum
+        };
+
+
         public string Correo
         {
             get => _correo;
@@ -29,10 +46,11 @@ namespace HospiSafe_WPF.ViewModels
 
         private async void ExecuteLogin(object? parameter = null)
         {
-            /*if (parameter is PasswordBox passwordBox) //Comprueba el tipo y crea la variable automaticamente
+            if (parameter is PasswordBox passwordBox) //Comprueba el tipo y crea la variable automaticamente
             {
                 using (var service = new ServiceUsuario())
                 {
+                    service.CrearUsuarioAsync(nuevoUsuario);
                     var usuario = await service.LoginAsync(Correo, passwordBox.Password);
                     if (usuario != null)
                     {
@@ -51,9 +69,8 @@ namespace HospiSafe_WPF.ViewModels
                         MessageBox.Show("Credenciales incorrectas");
                     }
                 }
-            }*/
-            Views.MainWindow mainWindow = new Views.MainWindow();
-            mainWindow.Show();
+            }
+           
         }
     }
 }

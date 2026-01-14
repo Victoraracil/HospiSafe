@@ -10,7 +10,7 @@ namespace HospiSafe_WPF.Models
         public GestorDBContext() { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=HospiSafe_BD;User Id=superadmin;Password=superpassword;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=localhost,1433;Database=HospiSafe_BD;User Id=sa;Password=SqlServer!2024;TrustServerCertificate=True;");
         }
     }
 }
