@@ -1,3 +1,3 @@
 # HospiSafe
 HospiSafe
-Prueba de commit y push
+Proyecto de gestion hospitalaria en progreso...
