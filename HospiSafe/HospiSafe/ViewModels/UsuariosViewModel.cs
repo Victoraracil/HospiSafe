@@ -128,6 +128,8 @@ namespace HospiSafe.ViewModels
             GuardarUsuarioCommand = new RelayCommand(PerformGuardarUsuario);
             EliminarUsuarioCommand = new RelayCommand(PerformEliminarUsuario);
             LimpiarDatosCommand = new RelayCommand(PerformLimpiarDatos);
+
+            Rol = RolUsuario.Paciente; //para que se muestre de primeras
         }
 
         #endregion
@@ -149,7 +151,7 @@ namespace HospiSafe.ViewModels
 
         private void PerformSelectedItemChanged(object? parameter = null)
         {
-            if (UsuarioSelected != null)
+            if (UsuarioSelected != null) //Entra un usuario seleccionado
             {
                 IdUsuario = UsuarioSelected.IdUsuario;
                 Nombre = UsuarioSelected.Nombre;
@@ -173,7 +175,7 @@ namespace HospiSafe.ViewModels
             FechaNacimiento = DateTime.Today;
             Telefono = string.Empty;
             CorreoElectronico = string.Empty;
-            Rol = RolUsuario.Personal;
+            Rol = RolUsuario.Paciente;
             Password = string.Empty;
         }
 
