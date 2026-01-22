@@ -54,7 +54,7 @@ namespace HospiSafe.Services
             using (var context = new GestorDBContext())
             {
                 bool existe = await context.Usuarios
-                    .AnyAsync(u => u.CorreoElectronico == usuario.CorreoElectronico);
+                    .AnyAsync(u => u.DNI == usuario.DNI);
 
                 if (existe)
                     return false;
@@ -62,11 +62,63 @@ namespace HospiSafe.Services
                 usuario.PasswordHash = PasswordHelper
                     .HashPassword(usuario.PasswordHash);
 
+
                 await context.Usuarios.AddAsync(usuario);
                 await context.SaveChangesAsync();
                 return true;
             }
         }
+
+        public async Task<bool> ActualizarUsuarioAsync(Usuario usuario)
+        {
+            if (usuario == null) throw new ArgumentNullException(nameof(usuario));
+
+            using (var context = new GestorDBContext())
+            {
+                var existing = await context.Usuarios
+                    .FirstOrDefaultAsync(u => u.IdUsuario == usuario.IdUsuario);
+
+                if (existing == null) return false;
+
+                //Comprobacion dni duplicado
+                bool dniDuplicado = await context.Usuarios.AnyAsync(u => u.DNI == usuario.DNI && u.IdUsuario != usuario.IdUsuario);
+
+                if (dniDuplicado) return false;
+
+                existing.Nombre = usuario.Nombre;
+                existing.Apellidos = usuario.Apellidos;
+                existing.DNI = usuario.DNI;
+                existing.FechaNacimiento = usuario.FechaNacimiento;
+                existing.Telefono = usuario.Telefono;
+                existing.CorreoElectronico = usuario.CorreoElectronico;
+                existing.Rol = usuario.Rol;
+
+                if (!string.IsNullOrWhiteSpace(usuario.PasswordHash))
+                {
+                    existing.PasswordHash = PasswordHelper.HashPassword(usuario.PasswordHash);
+                }
+
+                await context.SaveChangesAsync();
+                return true;
+            }
+        }
+
+        public async Task<bool> EliminarUsuarioAsync(int idUsuario)
+        {
+            using (var context = new GestorDBContext())
+            {
+                var usuario = await context.Usuarios
+                    .FirstOrDefaultAsync(u => u.IdUsuario == idUsuario);
+
+                if (usuario == null) return false;
+
+                context.Usuarios.Remove(usuario);
+                await context.SaveChangesAsync();
+                return true;
+            }
+        }
+
+
 
         public void Dispose()
         {
