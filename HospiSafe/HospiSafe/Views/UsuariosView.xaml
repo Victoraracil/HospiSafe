@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:HospiSafe.Views"
+             xmlns:local="clr-namespace:HospiSafe.Views" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
@@ -61,59 +61,94 @@
 
             <!-- ========= LISTADO DE USUARIOS ========= -->
             <Border Grid.Column="0"
-                    Background="White"
-                    CornerRadius="12"
-                    BorderBrush="#e2e8f0"
-                    BorderThickness="1"
-                    Padding="20"
-                    Margin="0,0,15,0">
+                Background="White"
+                CornerRadius="12"
+                BorderBrush="#e2e8f0"
+                BorderThickness="1"
+                Padding="20"
+                Margin="0,0,15,0">
 
-                <StackPanel>
-                    <TextBlock Text="Usuarios registrados"
-                               FontSize="16"
-                               FontWeight="Bold"
-                               Margin="0,0,0,10"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-                    <ListView ItemsSource="{Binding ListaUsuariosVisible}"
-                              SelectedItem="{Binding UsuarioSelected, Mode=TwoWay}"
-                              BorderThickness="0">
+                    <!--Titulo de la lista-->
+                    <TextBlock Grid.Row="0"
+                       Text="Usuarios registrados"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       Margin="0,0,0,10"/>
 
+                    <!--Lista-->
+                    <ListView Grid.Row="1"
+                      x:Name="lvUsuarios"
+                      ItemsSource="{Binding ListaUsuariosVisible}"
+                      SelectedItem="{Binding UsuarioSelected}"
+                      BorderThickness="0"
+                      HorizontalContentAlignment="Stretch"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto">
+                        
                         <!-- Cuando cambia la selección, notificamos al VM -->
-                        <ListView.InputBindings>
-                            <MouseBinding Gesture="LeftClick"
-                                          Command="{Binding SelectedItemChangedCommand}"
-                                          CommandParameter="{Binding SelectedItem, RelativeSource={RelativeSource AncestorType=ListView}}"/>
-                        </ListView.InputBindings>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction
+                                    Command="{Binding SelectedItemChangedCommand}"
+                                    CommandParameter="{Binding ElementName=lvUsuarios, Path=SelectedItem}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
 
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Border Background="#f8fafc"
-                                        CornerRadius="8"
-                                        Padding="10"
-                                        Margin="0,0,0,8">
+                                    CornerRadius="10"
+                                    Padding="12"
+                                    Margin="0,0,0,10">
 
-                                    <StackPanel>
-                                        <TextBlock Text="{Binding Nombre}"
-                                                   FontWeight="Bold"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="2*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
 
-                                        <TextBlock Text="{Binding Apellidos}"
-                                                   FontSize="12"
-                                                   Foreground="#64748b"/>
+                                        <StackPanel Grid.Column="0">
+                                            <TextBlock Text="{Binding Nombre}"
+                                           FontWeight="Bold"
+                                           FontSize="14"
+                                           Foreground="#0f172a"/>
 
-                                        <TextBlock Text="{Binding CorreoElectronico}"
-                                                   FontSize="12"
-                                                   Foreground="#64748b"/>
+                                            <TextBlock Text="{Binding Apellidos}"
+                                           FontSize="12"
+                                           Foreground="#475569"/>
 
-                                        <TextBlock Text="{Binding Rol}"
-                                                   FontSize="12"
-                                                   Foreground="{StaticResource PrimaryColor}"/>
-                                    </StackPanel>
+                                            <TextBlock Text="{Binding DNI}"
+                                           FontSize="12"
+                                           Foreground="#64748b"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1">
+                                            <TextBlock Text="{Binding CorreoElectronico, StringFormat=Email: {0}}"
+                                           FontSize="12"
+                                           Foreground="#64748b"/>
+
+                                            <TextBlock Text="{Binding Telefono, StringFormat=Teléfono: {0}}"
+                                           FontSize="12"
+                                           Foreground="#64748b"/>
+
+                                            <TextBlock Text="{Binding Rol}"
+                                           FontSize="12"
+                                           FontWeight="SemiBold"
+                                           Foreground="{StaticResource PrimaryColor}"/>
+                                        </StackPanel>
+                                    </Grid>
                                 </Border>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                </StackPanel>
+                </Grid>
             </Border>
+
 
             <!-- ========= FORMULARIO ========= -->
             <Border Grid.Column="1"
@@ -153,8 +188,8 @@
                         <StackPanel Grid.Row="0" Grid.Column="0" Margin="5">
                             <TextBlock Text="Nombre"/>
                             <TextBox Text="{Binding Nombre}"
+                                 Height="34"
                                  FontSize="16"
-                                 Height="38"
                                  Padding="8"/>
                         </StackPanel>
 
@@ -162,8 +197,8 @@
                         <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
                             <TextBlock Text="Apellidos"/>
                             <TextBox Text="{Binding Apellidos}"
+                                 Height="34"
                                  FontSize="16"
-                                 Height="38"
                                  Padding="8"/>
                         </StackPanel>
 
@@ -217,7 +252,7 @@
                         BorderThickness="0"
                         Margin="0,0,10,0"
                         Command="{Binding GuardarUsuarioCommand}"
-                        CommandParameter="{Binding ElementName=PasswordBox, Path=Password}"/>
+                        Click="Guardar_Click"/>
 
                         <Button Content="Eliminar"
                         Padding="18,8"
