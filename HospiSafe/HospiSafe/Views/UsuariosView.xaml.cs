@@ -26,5 +26,14 @@ namespace HospiSafe.Views
             InitializeComponent();
             DataContext = new UsuariosViewModel();
         }
+
+        private void Guardar_Click(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is UsuariosViewModel vm)
+            {
+                vm.SetPasswordFromView(PasswordBox.Password);
+                PasswordBox.Clear();
+            }
+        }
     }
 }
