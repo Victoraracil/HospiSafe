@@ -17,6 +17,10 @@
 
     <Window.Resources>
 
+        <DataTemplate DataType="{x:Type vm:PruebasViewModel}">
+            <views:PruebasView/>
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type vm:HomeViewModel}">
             <views:HomeView/>
         </DataTemplate>

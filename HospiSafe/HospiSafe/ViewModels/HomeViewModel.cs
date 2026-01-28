@@ -52,11 +52,19 @@ namespace HospiSafe.ViewModels
         {
             if (parameter is Module module)
             {
-                MessageBox.Show($"Abriendo módulo: {module.Title}");
-                // Future: Navigate to specific ViewModel
-                // _mainViewModel.CurrentViewModel = new PacientesViewModel();
-                _mainViewModel.CurrentViewModel = new UsuariosViewModel();
+                switch (module.Title)
+                {
+                    case "Pruebas":
+                        _mainViewModel.CurrentViewModel = new PruebasViewModel(_mainViewModel);
+                        break;
+
+                    case "Usuarios":
+                        _mainViewModel.CurrentViewModel = new UsuariosViewModel();
+                        break;
+                }
             }
         }
+
+
     }
 }

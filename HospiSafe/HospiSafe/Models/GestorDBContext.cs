@@ -12,6 +12,9 @@ namespace HospiSafe.Models
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Paciente> Pacientes { get; set; }
         public DbSet<Cita> Citas { get; set; }
+        public DbSet<Prueba> Pruebas { get; set; }
+
+
         public GestorDBContext() { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
