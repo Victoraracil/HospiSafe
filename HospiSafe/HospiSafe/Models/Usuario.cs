@@ -9,8 +9,9 @@ namespace HospiSafe.Models
 {
     public enum RolUsuario
     {
-        Admin,
-        Personal
+        Admin = 1,
+        Personal = 2,
+        Paciente = 3
     }
     public class Usuario : Persona
     {

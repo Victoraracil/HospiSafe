@@ -1,5 +1,4 @@
-﻿using HospiSafe.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,23 +16,13 @@ using System.Windows.Shapes;
 namespace HospiSafe.Views
 {
     /// <summary>
-    /// Lógica de interacción para UsuariosView.xaml
+    /// Lógica de interacción para PacientesView.xaml
     /// </summary>
-    public partial class UsuariosView : UserControl
+    public partial class PacientesView : UserControl
     {
-        public UsuariosView()
+        public PacientesView()
         {
             InitializeComponent();
-            DataContext = new UsuariosViewModel();
-        }
-
-        private void Guardar_Click(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is UsuariosViewModel vm)
-            {
-                vm.SetPasswordFromView(PasswordBox.Password);
-                PasswordBox.Clear();
-            }
         }
     }
 }

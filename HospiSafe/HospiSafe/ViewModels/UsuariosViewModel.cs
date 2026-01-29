@@ -128,6 +128,8 @@ namespace HospiSafe.ViewModels
             GuardarUsuarioCommand = new RelayCommand(PerformGuardarUsuario);
             EliminarUsuarioCommand = new RelayCommand(PerformEliminarUsuario);
             LimpiarDatosCommand = new RelayCommand(PerformLimpiarDatos);
+
+            PerformCrearNuevoUsuario();
         }
 
         #endregion
@@ -149,7 +151,7 @@ namespace HospiSafe.ViewModels
 
         private void PerformSelectedItemChanged(object? parameter = null)
         {
-            if (UsuarioSelected != null)
+            if (UsuarioSelected != null) //Entra un usuario seleccionado
             {
                 IdUsuario = UsuarioSelected.IdUsuario;
                 Nombre = UsuarioSelected.Nombre;
@@ -173,7 +175,7 @@ namespace HospiSafe.ViewModels
             FechaNacimiento = DateTime.Today;
             Telefono = string.Empty;
             CorreoElectronico = string.Empty;
-            Rol = RolUsuario.Personal;
+            Rol = RolUsuario.Paciente;
             Password = string.Empty;
         }
 
@@ -194,6 +196,11 @@ namespace HospiSafe.ViewModels
                 PasswordHash = Password // se hashea en el service
             };
 
+            if (!string.IsNullOrWhiteSpace(Password))
+            {
+                usuarioGuardar.PasswordHash = Password;
+            }
+
             if (IdUsuario == 0)
             {
                 // Usuario nuevo
@@ -207,12 +214,23 @@ namespace HospiSafe.ViewModels
                 }
                 else
                 {
-                    MessageBox.Show("Ya existe un usuario con ese correo");
+                    MessageBox.Show("Ya existe un usuario con ese DNI");
                 }
             }
             else
             {
-                MessageBox.Show("Edición aún no implementada");
+                var actualizado = await service.ActualizarUsuarioAsync(usuarioGuardar);
+
+                if(actualizado)
+                {
+                    MessageBox.Show("Usuario actualizado correctamente");
+                    PerformCargarUsuarios();
+                    PerformCrearNuevoUsuario();
+                }
+                else
+                {
+                    MessageBox.Show("Error actualizando usuario");
+                }
             }
         }
 
@@ -220,12 +238,25 @@ namespace HospiSafe.ViewModels
         {
             if (UsuarioSelected == null) return;
 
-            MessageBox.Show("Eliminar usuario aún no implementado");
+            var service = new ServiceUsuario();
+            bool eliminado = await service.EliminarUsuarioAsync(UsuarioSelected.IdUsuario);
+            
+            if (eliminado)
+            {
+                MessageBox.Show("Usuario eliminado");
+                PerformCargarUsuarios();
+                PerformCrearNuevoUsuario();
+            }
         }
 
-        public void PerformLimpiarDatos(object? parameter = null)
+        private void PerformLimpiarDatos(object? parameter = null)
         {
             PerformCrearNuevoUsuario();
+        }
+
+        public void SetPasswordFromView(string password) //Recogemos la password, la traemos y la hasheamos en el service
+        {
+            Password = password;
         }
 
         #endregion
