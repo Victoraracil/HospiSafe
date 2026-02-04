@@ -63,6 +63,10 @@ namespace HospiSafe.ViewModels
                     _mainViewModel.CurrentViewModel = new UsuariosViewModel();
                     break;
 
+                case "Pruebas":
+                    _mainViewModel.CurrentViewModel = new PruebasViewModel();
+                    break;
+
                 default:
                     MessageBox.Show("Módulo no implementado");
                     break;

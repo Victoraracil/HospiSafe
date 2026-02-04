@@ -93,23 +93,22 @@ namespace HospiSafe.ViewModels
         public ICommand CancelarCommand { get; }
         public ICommand VolverCommand { get; }
 
-        public PruebasViewModel(MainViewModel mainViewModel)
+        public PruebasViewModel()
         {
-            _mainViewModel = mainViewModel;
 
             CargarCommand = new RelayCommand(async _ => await CargarAsync());
             NuevoCommand = new RelayCommand(_ => MostrarFormulario());
             GuardarCommand = new RelayCommand(async _ => await GuardarAsync());
             CancelarCommand = new RelayCommand(_ => OcultarFormulario());
-            VolverCommand = new RelayCommand(_ => Volver());
+            //VolverCommand = new RelayCommand(_ => Volver());
 
             FormVisible = false;
         }
 
-        private void Volver()
+        /*private void Volver()
         {
             _mainViewModel.CurrentViewModel = new HomeViewModel(_mainViewModel);
-        }
+        }*/
 
         private async Task CargarAsync()
         {
