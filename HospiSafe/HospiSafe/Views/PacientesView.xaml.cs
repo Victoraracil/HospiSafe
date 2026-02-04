@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospiSafe.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace HospiSafe.Views
         public PacientesView()
         {
             InitializeComponent();
+            DataContext = new PacientesViewModel();
         }
     }
 }
