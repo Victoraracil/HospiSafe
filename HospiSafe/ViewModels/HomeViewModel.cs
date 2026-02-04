@@ -50,28 +50,21 @@ namespace HospiSafe.ViewModels
 
         private void ExecuteOpenModule(object parameter)
         {
-            if (parameter is not Module module)
-                return;
-
-            switch (module.Title)
+            if (parameter is Module module)
             {
-                case "Pacientes":
-                    _mainViewModel.CurrentViewModel = new PacientesViewModel();
-                    break;
+                switch (module.Title)
+                {
+                    case "Pruebas":
+                        _mainViewModel.CurrentViewModel = new PruebasViewModel(_mainViewModel);
+                        break;
 
-                case "Usuarios":
-                    _mainViewModel.CurrentViewModel = new UsuariosViewModel();
-                    break;
-
-                case "Pruebas":
-                    _mainViewModel.CurrentViewModel = new PruebasViewModel();
-                    break;
-
-                default:
-                    MessageBox.Show("Módulo no implementado");
-                    break;
+                    case "Usuarios":
+                        _mainViewModel.CurrentViewModel = new UsuariosViewModel();
+                        break;
+                }
             }
         }
+
 
     }
 }
