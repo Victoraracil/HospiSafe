@@ -28,10 +28,6 @@
         <DataTemplate DataType="{x:Type vm:UsuariosViewModel}">
             <views:UsuariosView/>
         </DataTemplate>
-        
-        <DataTemplate DataType="{x:Type vm:PacientesViewModel}">
-            <views:PacientesView/>
-        </DataTemplate>
 
     </Window.Resources>
 
