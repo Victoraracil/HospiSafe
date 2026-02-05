@@ -23,6 +23,7 @@ namespace HospiSafe.Views
     {
         public PacientesView()
         {
+
             InitializeComponent();
             DataContext = new PacientesViewModel();
         }
