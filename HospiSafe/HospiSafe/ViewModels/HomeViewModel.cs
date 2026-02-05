@@ -59,12 +59,12 @@ namespace HospiSafe.ViewModels
                     _mainViewModel.CurrentViewModel = new PacientesViewModel();
                     break;
 
-                case "Usuarios":
-                    _mainViewModel.CurrentViewModel = new UsuariosViewModel();
+                case "Pruebas":
+                    _mainViewModel.CurrentViewModel = new PruebasViewModel(this._mainViewModel);
                     break;
 
-                case "Pruebas":
-                    _mainViewModel.CurrentViewModel = new PruebasViewModel();
+                case "Usuarios":
+                    _mainViewModel.CurrentViewModel = new UsuariosViewModel();
                     break;
 
                 default:

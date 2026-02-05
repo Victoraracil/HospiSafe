@@ -13,6 +13,12 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding CargarCommand}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
 
         <!-- ================= HEADER ================= -->
         <Border Grid.Row="0"
@@ -34,14 +40,6 @@
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
                     
-                    <Button Content="Cargar"
-                            Margin="0,0,10,0"
-                            Padding="12,6"
-                            Background="Transparent"
-                            BorderBrush="#cbd5e1"
-                            BorderThickness="1"
-                            Command="{Binding CargarCommand}"/>
-
                     <Button Content="Nuevo Usuario"
                             Padding="12,6"
                             Margin="0,0,10,0"
