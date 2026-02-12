@@ -56,7 +56,7 @@ namespace HospiSafe.ViewModels
                     break;
 
                 case "Pruebas":
-                    _mainViewModel.CurrentViewModel = new PruebasViewModel(this._mainViewModel);
+                    _mainViewModel.CurrentViewModel = new PruebasViewModel();
                     break;
 
                 case "Usuarios":

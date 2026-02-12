@@ -1,9 +1,12 @@
-﻿using HospiSafe.ViewModels.Base;
+﻿using HospiSafe.Services;
+using HospiSafe.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace HospiSafe.ViewModels
@@ -27,32 +30,28 @@ namespace HospiSafe.ViewModels
 
         private async void ExecuteLogin(object? parameter = null)
         {
-            /*if (parameter is PasswordBox passwordBox) //Comprueba el tipo y crea la variable automaticamente
+            if (parameter is PasswordBox passwordBox)
             {
                 using (var service = new ServiceUsuario())
                 {
                     var usuario = await service.LoginAsync(Correo, passwordBox.Password);
+
                     if (usuario != null)
                     {
-                         Views.MainWindow mainWindow = new Views.MainWindow();
-                         mainWindow.Show();
-                         
-                         // Close LoginView
-                         if (parameter is PasswordBox pb)
-                         {
-                             Window loginWindow = Window.GetWindow(pb);
-                             loginWindow?.Close();
-                         }
+                        // Abrimos la ventana principal
+                        Window MainWindow = new MainWindow();
+                        MainWindow.Show();
+
+                        // Cerramos la ventana de login
+                        Window loginWindow = Window.GetWindow(passwordBox);
+                        loginWindow?.Close();
                     }
                     else
                     {
                         MessageBox.Show("Credenciales incorrectas");
                     }
                 }
-            }*/
-            var mainWindow = new MainWindow();
-            //Views.MainWindow mainWindow = new Views.MainWindow();
-            mainWindow.Show();
+            }
         }
     }
 }
