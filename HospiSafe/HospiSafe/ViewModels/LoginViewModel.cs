@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace HospiSafe.ViewModels
@@ -51,8 +53,16 @@ namespace HospiSafe.ViewModels
                 }
             }*/
             var mainWindow = new MainWindow();
-            //Views.MainWindow mainWindow = new Views.MainWindow();
+
+            Application.Current.MainWindow = mainWindow;
+
             mainWindow.Show();
+
+            if (parameter is PasswordBox passwordBox)
+            {
+                Window loginWindow = Window.GetWindow(passwordBox);
+                loginWindow?.Close();
+            }
         }
     }
 }
