@@ -34,8 +34,7 @@
         </DataTemplate>
 
     </Window.Resources>
-
-    <Grid>
+<Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -95,7 +94,4 @@
 
         <ContentControl Grid.Row="1" Content="{Binding CurrentViewModel}"/>
     </Grid>
-
-    
-    
 </Window>
