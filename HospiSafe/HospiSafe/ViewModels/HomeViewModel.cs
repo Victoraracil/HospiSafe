@@ -55,10 +55,6 @@ namespace HospiSafe.ViewModels
                     _mainViewModel.CurrentViewModel = new PacientesViewModel();
                     break;
 
-                case "Citas":
-                    _mainViewModel.CurrentViewModel = new CitasViewModel();
-                    break;
-
                 case "Pruebas":
                     _mainViewModel.CurrentViewModel = new PruebasViewModel();
                     break;
