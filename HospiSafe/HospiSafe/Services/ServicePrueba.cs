@@ -10,12 +10,14 @@ namespace HospiSafe.Services
 {
     public class ServicePrueba : IDisposable
     {
-        bool disposed;
+        private bool disposed;
 
         public ServicePrueba()
         {
             disposed = false;
         }
+
+        #region CRUD
 
         public async Task<List<Prueba>> ListarPruebasAsync()
         {
@@ -37,6 +39,20 @@ namespace HospiSafe.Services
 
             using (var context = new GestorDBContext())
             {
+                // Verificar que el paciente existe
+                bool pacienteExiste = await context.Pacientes
+                    .AnyAsync(p => p.IdPaciente == prueba.IdPaciente);
+
+                if (!pacienteExiste)
+                    return false;
+
+                // Verificar que el usuario existe
+                bool usuarioExiste = await context.Usuarios
+                    .AnyAsync(u => u.IdUsuario == prueba.IdUsuario);
+
+                if (!usuarioExiste)
+                    return false;
+
                 await context.Pruebas.AddAsync(prueba);
                 await context.SaveChangesAsync();
                 return true;
@@ -56,6 +72,16 @@ namespace HospiSafe.Services
                 if (existente == null)
                     return false;
 
+                // Validar relaciones
+                bool pacienteExiste = await context.Pacientes
+                    .AnyAsync(p => p.IdPaciente == prueba.IdPaciente);
+
+                bool usuarioExiste = await context.Usuarios
+                    .AnyAsync(u => u.IdUsuario == prueba.IdUsuario);
+
+                if (!pacienteExiste || !usuarioExiste)
+                    return false;
+
                 existente.Fecha = prueba.Fecha;
                 existente.TipoAnalisis = prueba.TipoAnalisis;
                 existente.Estado = prueba.Estado;
@@ -73,6 +99,7 @@ namespace HospiSafe.Services
             using (var context = new GestorDBContext())
             {
                 var prueba = await context.Pruebas.FindAsync(idPrueba);
+
                 if (prueba == null)
                     return false;
 
@@ -81,6 +108,10 @@ namespace HospiSafe.Services
                 return true;
             }
         }
+
+        #endregion
+
+        #region IDisposable
 
         public void Dispose()
         {
@@ -100,6 +131,9 @@ namespace HospiSafe.Services
         {
             Dispose(false);
         }
+
+        #endregion
     }
+
 
 }
