@@ -11,6 +11,9 @@ namespace HospiSafe.ViewModels
     public class MainViewModel : BaseViewModel
     {
         private BaseViewModel _currentViewModel;
+        public string UserInitial { get; set; } = "U";
+        public string UserName { get; set; } = "Usuario";
+        public string UserRole { get; set; } = "Rol";
 
         public BaseViewModel CurrentViewModel
         {
