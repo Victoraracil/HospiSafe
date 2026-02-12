@@ -189,7 +189,7 @@
                             <TextBox Text="{Binding Nombre}"
                                  Height="34"
                                  FontSize="16"
-                                 Padding="8"/>
+                                 Padding="4"/>
                         </StackPanel>
 
                         <!-- apellids -->
@@ -198,19 +198,21 @@
                             <TextBox Text="{Binding Apellidos}"
                                  Height="34"
                                  FontSize="16"
-                                 Padding="8"/>
+                                 Padding="4"/>
                         </StackPanel>
 
                         <!-- dni -->
                         <StackPanel Grid.Row="1" Grid.Column="0" Margin="5">
                             <TextBlock Text="DNI"/>
-                            <TextBox Text="{Binding DNI}" Height="34" Padding="8"/>
+                            <TextBox Text="{Binding DNI}" 
+                                     Height="34" 
+                                     Padding="8"/>
                         </StackPanel>
 
                         <!-- fcha -->
                         <StackPanel Grid.Row="1" Grid.Column="1" Margin="5" VerticalAlignment="Center">
                             <TextBlock Text="Fecha de nacimiento"/>
-                            <DatePicker SelectedDate="{Binding FechaNacimiento}" Height="34"/>
+                            <DatePicker SelectedDate="{Binding FechaNacimiento}" Height="34" Padding="6" VerticalContentAlignment="Center"/>
                         </StackPanel>
 
                         <!-- tlfono -->
@@ -228,13 +230,13 @@
                         <!-- rol -->
                         <StackPanel Grid.Row="3" Grid.Column="0" Margin="5" VerticalAlignment="Center">
                             <TextBlock Text="Rol"/>
-                            <ComboBox ItemsSource="{Binding Roles}" SelectedItem="{Binding Rol}" Height="34" IsEnabled="False"/>
+                            <ComboBox ItemsSource="{Binding Roles}" SelectedItem="{Binding Rol}" Height="34" Padding="6" IsEnabled="False"/>
                         </StackPanel>
 
                         <!-- password -->
                         <StackPanel Grid.Row="3" Grid.Column="1" Margin="5">
                             <TextBlock Text="Contraseña"/>
-                            <PasswordBox x:Name="PasswordBox" Height="34"/>
+                            <PasswordBox x:Name="PasswordBox" Height="34" Padding="6"/>
                         </StackPanel>
                     </Grid>
 

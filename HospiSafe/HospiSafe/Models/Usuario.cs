@@ -9,6 +9,7 @@ namespace HospiSafe.Models
 {
     public enum RolUsuario
     {
+        Sin_Asignar = 0,
         Admin = 1,
         Personal = 2,
         Paciente = 3
