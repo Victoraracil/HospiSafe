@@ -34,7 +34,8 @@ namespace HospiSafe.ViewModels
             {
                 using (var service = new ServiceUsuario())
                 {
-                    var usuario = await service.LoginAsync(Correo, passwordBox.Password);
+                    var usuario = "admin";
+                    //var usuario = await service.LoginAsync(Correo, passwordBox.Password);
 
                     if (usuario != null)
                     {
@@ -51,18 +52,8 @@ namespace HospiSafe.ViewModels
                         MessageBox.Show("Credenciales incorrectas");
                     }
                 }
-            }*/
-            var mainWindow = new MainWindow();
-
-            Application.Current.MainWindow = mainWindow;
-
-            mainWindow.Show();
-
-            if (parameter is PasswordBox passwordBox)
-            {
-                Window loginWindow = Window.GetWindow(passwordBox);
-                loginWindow?.Close();
             }
+            
         }
     }
 }
