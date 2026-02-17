@@ -23,7 +23,15 @@ namespace HospiSafe.Views
         public PruebasView()
         {
             InitializeComponent();
-            DataContext = new PruebasViewModel();
+            Loaded += PruebasView_Loaded;
+        }
+
+        private void PruebasView_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is PruebasViewModel vm)
+            {
+                vm.CargarCommand.Execute(null);
+            }
         }
     }
 
