@@ -8,10 +8,5 @@
         <SolidColorBrush x:Key="PrimaryColor">#0f4c81</SolidColorBrush>
         <SolidColorBrush x:Key="PrimaryLightColor">#3b82f6</SolidColorBrush>
         <SolidColorBrush x:Key="Gray50">#f8fafc</SolidColorBrush>
-        <Style TargetType="Button">
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="Margin" Value="0,5"/>
-            <Setter Property="Cursor" Value="Hand"/>
-        </Style>
     </Application.Resources>
 </Application>

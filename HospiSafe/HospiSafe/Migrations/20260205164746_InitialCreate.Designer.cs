@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospiSafe.Migrations
 {
     [DbContext(typeof(GestorDBContext))]
-    [Migration("20260115170520_InitialCreate")]
+    [Migration("20260205164746_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -98,6 +98,44 @@ namespace HospiSafe.Migrations
                     b.ToTable("Pacientes");
                 });
 
+            modelBuilder.Entity("HospiSafe.Models.Prueba", b =>
+                {
+                    b.Property<int>("IdPrueba")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPrueba"));
+
+                    b.Property<int>("Estado")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdPaciente")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Resultados")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("TipoAnalisis")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("IdPrueba");
+
+                    b.HasIndex("IdPaciente");
+
+                    b.HasIndex("IdUsuario");
+
+                    b.ToTable("Pruebas");
+                });
+
             modelBuilder.Entity("HospiSafe.Models.Usuario", b =>
                 {
                     b.Property<int>("IdUsuario")
@@ -154,6 +192,25 @@ namespace HospiSafe.Migrations
 
                     b.HasOne("HospiSafe.Models.Usuario", "Usuario")
                         .WithMany("Citas")
+                        .HasForeignKey("IdUsuario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Paciente");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("HospiSafe.Models.Prueba", b =>
+                {
+                    b.HasOne("HospiSafe.Models.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("IdPaciente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospiSafe.Models.Usuario", "Usuario")
+                        .WithMany()
                         .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
