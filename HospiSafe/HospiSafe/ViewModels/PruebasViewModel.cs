@@ -14,71 +14,62 @@ namespace HospiSafe.ViewModels
 {
     public class PruebasViewModel : BaseViewModel
     {
-        #region Atributos
-
-        private ObservableCollection<Prueba> _pruebas = new ObservableCollection<Prueba>();
-        private ObservableCollection<Prueba> _pruebasOriginal = new ObservableCollection<Prueba>();
-
-        private ObservableCollection<Paciente> _pacientes = new ObservableCollection<Paciente>();
-        private ObservableCollection<Usuario> _usuarios = new ObservableCollection<Usuario>();
-
-        private Paciente _pacienteSeleccionado;
-        private Usuario _usuarioSeleccionado;
-
-        private string _tipoAnalisis = "";
-        private string _resultados = "";
-        private string _textoBusqueda = "";
-
-        private bool _formVisible;
-
-        #endregion
-
-        #region Propiedades públicas
+        private readonly MainViewModel _mainViewModel;
 
         public string Titulo { get; } = "Laboratorio";
 
+        private ObservableCollection<Prueba> _pruebas = new ObservableCollection<Prueba>();
         public ObservableCollection<Prueba> Pruebas
         {
             get => _pruebas;
             set => SetProperty(ref _pruebas, value);
         }
 
+        private ObservableCollection<Prueba> _pruebasOriginal = new ObservableCollection<Prueba>();
+
+        private ObservableCollection<Paciente> _pacientes = new ObservableCollection<Paciente>();
         public ObservableCollection<Paciente> Pacientes
         {
             get => _pacientes;
             set => SetProperty(ref _pacientes, value);
         }
 
+        private ObservableCollection<Usuario> _usuarios = new ObservableCollection<Usuario>();
         public ObservableCollection<Usuario> Usuarios
         {
             get => _usuarios;
             set => SetProperty(ref _usuarios, value);
         }
 
+        private Paciente _pacienteSeleccionado;
         public Paciente PacienteSeleccionado
         {
             get => _pacienteSeleccionado;
             set => SetProperty(ref _pacienteSeleccionado, value);
         }
 
+        private Usuario _usuarioSeleccionado;
         public Usuario UsuarioSeleccionado
         {
             get => _usuarioSeleccionado;
             set => SetProperty(ref _usuarioSeleccionado, value);
         }
 
+        private string _tipoAnalisis = "";
         public string TipoAnalisis
         {
             get => _tipoAnalisis;
             set => SetProperty(ref _tipoAnalisis, value);
         }
 
+        private string _resultados = "";
         public string Resultados
         {
             get => _resultados;
             set => SetProperty(ref _resultados, value);
         }
 
+        private string _textoBusqueda = "";
         public string TextoBusqueda
         {
             get => _textoBusqueda;
@@ -89,38 +80,36 @@ namespace HospiSafe.ViewModels
             }
         }
 
+        private bool _formVisible;
         public bool FormVisible
         {
             get => _formVisible;
             set => SetProperty(ref _formVisible, value);
         }
 
-        #endregion
-
-        #region Comandos
-
         public ICommand CargarCommand { get; }
         public ICommand NuevoCommand { get; }
         public ICommand GuardarCommand { get; }
         public ICommand CancelarCommand { get; }
+        public ICommand VolverCommand { get; }
 
-        #endregion
-
-        #region Constructor
-
-        public PruebasViewModel()
+        public PruebasViewModel(MainViewModel mainViewModel)
         {
+            _mainViewModel = mainViewModel;
+
             CargarCommand = new RelayCommand(async _ => await CargarAsync());
             NuevoCommand = new RelayCommand(_ => MostrarFormulario());
             GuardarCommand = new RelayCommand(async _ => await GuardarAsync());
             CancelarCommand = new RelayCommand(_ => OcultarFormulario());
+            VolverCommand = new RelayCommand(_ => Volver());
 
             FormVisible = false;
         }
 
-        #endregion
-
-        #region Métodos
+        private void Volver()
+        {
+            _mainViewModel.CurrentViewModel = new HomeViewModel(_mainViewModel);
+        }
 
         private async Task CargarAsync()
         {
@@ -219,20 +208,13 @@ namespace HospiSafe.ViewModels
             }
 
             var filtradas = _pruebasOriginal.Where(p =>
-                (p.Paciente != null &&
-                 ((p.Paciente.Nombre + " " + p.Paciente.Apellidos)
-                 .ToLower().Contains(t)))
-                || (!string.IsNullOrEmpty(p.TipoAnalisis) &&
-                    p.TipoAnalisis.ToLower().Contains(t))
-                || (!string.IsNullOrEmpty(p.Resultados) &&
-                    p.Resultados.ToLower().Contains(t))
+                (p.Paciente != null && ((p.Paciente.Nombre + " " + p.Paciente.Apellidos).ToLower().Contains(t)))
+                || (!string.IsNullOrEmpty(p.TipoAnalisis) && p.TipoAnalisis.ToLower().Contains(t))
+                || (!string.IsNullOrEmpty(p.Resultados) && p.Resultados.ToLower().Contains(t))
             );
 
             Pruebas = new ObservableCollection<Prueba>(filtradas);
         }
-
-        #endregion
     }
-
 
 }

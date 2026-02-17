@@ -1,12 +1,9 @@
-﻿using HospiSafe.Services;
-using HospiSafe.ViewModels.Base;
+﻿using HospiSafe.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace HospiSafe.ViewModels
@@ -30,21 +27,22 @@ namespace HospiSafe.ViewModels
 
         private async void ExecuteLogin(object? parameter = null)
         {
-            if (parameter is PasswordBox passwordBox)
+            /*if (parameter is PasswordBox passwordBox) //Comprueba el tipo y crea la variable automaticamente
             {
                 using (var service = new ServiceUsuario())
                 {
                     var usuario = await service.LoginAsync(Correo, passwordBox.Password);
-
                     if (usuario != null)
                     {
-                        // Abrimos la ventana principal
-                        Window MainWindow = new MainWindow();
-                        MainWindow.Show();
-
-                        // Cerramos la ventana de login
-                        Window loginWindow = Window.GetWindow(passwordBox);
-                        loginWindow?.Close();
+                         Views.MainWindow mainWindow = new Views.MainWindow();
+                         mainWindow.Show();
+                         
+                         // Close LoginView
+                         if (parameter is PasswordBox pb)
+                         {
+                             Window loginWindow = Window.GetWindow(pb);
+                             loginWindow?.Close();
+                         }
                     }
                     else
                     {
@@ -53,16 +51,8 @@ namespace HospiSafe.ViewModels
                 }
             }*/
             var mainWindow = new MainWindow();
-
-            Application.Current.MainWindow = mainWindow;
-
+            //Views.MainWindow mainWindow = new Views.MainWindow();
             mainWindow.Show();
-
-            if (parameter is PasswordBox passwordBox)
-            {
-                Window loginWindow = Window.GetWindow(passwordBox);
-                loginWindow?.Close();
-            }
         }
     }
 }

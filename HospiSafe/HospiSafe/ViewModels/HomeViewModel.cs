@@ -21,6 +21,10 @@ namespace HospiSafe.ViewModels
     {
         private readonly MainViewModel _mainViewModel;
 
+        public string UserInitial { get; set; } = "U";
+        public string UserName { get; set; } = "Usuario";
+        public string UserRole { get; set; } = "Rol";
+
         public ObservableCollection<Module> Modules { get; set; }
 
         public ICommand LogoutCommand => _mainViewModel.LogoutCommand;
@@ -60,7 +64,7 @@ namespace HospiSafe.ViewModels
                     break;
 
                 case "Pruebas":
-                    _mainViewModel.CurrentViewModel = new PruebasViewModel();
+                    _mainViewModel.CurrentViewModel = new PruebasViewModel(this._mainViewModel);
                     break;
 
                 case "Usuarios":

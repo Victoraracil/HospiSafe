@@ -1,11 +1,9 @@
 ﻿using HospiSafe.ViewModels.Base;
-using HospiSafe.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 
 namespace HospiSafe.ViewModels
@@ -13,9 +11,6 @@ namespace HospiSafe.ViewModels
     public class MainViewModel : BaseViewModel
     {
         private BaseViewModel _currentViewModel;
-        public string UserInitial { get; set; } = "U";
-        public string UserName { get; set; } = "Usuario";
-        public string UserRole { get; set; } = "Rol";
 
         public BaseViewModel CurrentViewModel
         {
@@ -24,33 +19,20 @@ namespace HospiSafe.ViewModels
         }
 
         public ICommand LogoutCommand { get; }
-        public ICommand VolverInicioCommand { get; }
 
         public MainViewModel()
         {
             // Vista inicial es Home
             CurrentViewModel = new HomeViewModel(this);
-            LogoutCommand = new RelayCommand(PerformExecuteLogout);
-            VolverInicioCommand = new RelayCommand(PerformVolverInicio);
+            LogoutCommand = new RelayCommand(ExecuteLogout);
         }
 
-        private void PerformExecuteLogout(object obj)
+        private void ExecuteLogout(object obj)
         {
-            var loginWindow = new LoginView(); //objeto de login
-
-            Application.Current.MainWindow = loginWindow; //asociamos a ventana principal para que la muestre
-
-            loginWindow.Show();
-
-            if (obj is Window mainWindow)
+            if (obj is System.Windows.Window window)
             {
-                mainWindow.Close(); //cierra
+                window.Close();
             }
-        }
-
-        private void PerformVolverInicio(object obj)
-        {
-            CurrentViewModel = new HomeViewModel(this); //volver a la vista inicial
         }
     }
 }

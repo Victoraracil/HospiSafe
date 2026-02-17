@@ -10,10 +10,40 @@
              Background="{StaticResource Gray50}">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Border Grid.Row="0" Background="White" BorderBrush="#e2e8f0" BorderThickness="0,0,0,1" Padding="20,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="+" FontSize="24" Foreground="{StaticResource PrimaryLightColor}" FontWeight="Bold" Margin="0,0,8,0"/>
+                    <TextBlock Text="HospiSafe" FontSize="20" Foreground="{StaticResource PrimaryColor}" FontWeight="Bold"/>
+                </StackPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="{StaticResource PrimaryLightColor}" Width="40" Height="40" CornerRadius="20" Margin="0,0,10,0">
+                        <TextBlock Text="{Binding UserInitial}" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center" Margin="0,0,20,0">
+                        <TextBlock Text="{Binding UserName}" FontWeight="SemiBold" FontSize="14"/>
+                        <TextBlock Text="{Binding UserRole}" Foreground="#64748b" FontSize="12"/>
+                    </StackPanel>
+                    <Button Content="Salir" Background="Transparent" Foreground="#64748b" BorderBrush="#cbd5e1" BorderThickness="1" Command="{Binding LogoutCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"/>
+                </StackPanel>
+
+            </Grid>
+        </Border>
+
         <!-- Main Content -->
-        <ScrollViewer Grid.Row="0" Padding="30">
+        <ScrollViewer Grid.Row="1" Padding="30">
             <StackPanel MaxWidth="1200" HorizontalAlignment="Center">
                 <Border Background="{StaticResource PrimaryColor}" CornerRadius="15" Padding="30" Margin="0,0,0,30">
                     <StackPanel>
