@@ -78,6 +78,36 @@ namespace HospiSafe.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Pruebas",
+                columns: table => new
+                {
+                    IdPrueba = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TipoAnalisis = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Estado = table.Column<int>(type: "int", nullable: false),
+                    Resultados = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    IdPaciente = table.Column<int>(type: "int", nullable: false),
+                    IdUsuario = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pruebas", x => x.IdPrueba);
+                    table.ForeignKey(
+                        name: "FK_Pruebas_Pacientes_IdPaciente",
+                        column: x => x.IdPaciente,
+                        principalTable: "Pacientes",
+                        principalColumn: "IdPaciente",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Pruebas_Usuarios_IdUsuario",
+                        column: x => x.IdUsuario,
+                        principalTable: "Usuarios",
+                        principalColumn: "IdUsuario",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Citas_IdPaciente",
                 table: "Citas",
@@ -87,6 +117,16 @@ namespace HospiSafe.Migrations
                 name: "IX_Citas_IdUsuario",
                 table: "Citas",
                 column: "IdUsuario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pruebas_IdPaciente",
+                table: "Pruebas",
+                column: "IdPaciente");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Pruebas_IdUsuario",
+                table: "Pruebas",
+                column: "IdUsuario");
         }
 
         /// <inheritdoc />
@@ -94,6 +134,9 @@ namespace HospiSafe.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Citas");
+
+            migrationBuilder.DropTable(
+                name: "Pruebas");
 
             migrationBuilder.DropTable(
                 name: "Pacientes");

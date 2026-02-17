@@ -96,6 +96,8 @@ namespace HospiSafe.ViewModels
         public ICommand GuardarPacienteCommand { get; }
         public ICommand EliminarPacienteCommand { get; }
         public ICommand LimpiarDatosCommand { get; }
+        public ICommand VolverCommand { get; }
+
 
         #endregion
 
