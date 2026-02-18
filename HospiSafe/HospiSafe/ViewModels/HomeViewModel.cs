@@ -63,10 +63,6 @@ namespace HospiSafe.ViewModels
                     _mainViewModel.CurrentViewModel = new UsuariosViewModel();
                     break;
 
-                case "Citas":
-                    _mainViewModel.CurrentViewModel = new CitasViewModel();
-                    break;
-
                 default:
                     MessageBox.Show("Módulo no implementado");
                     break;
