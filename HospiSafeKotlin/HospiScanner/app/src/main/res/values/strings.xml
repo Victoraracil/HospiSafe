@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HospiScanner</string>
+    
+    <!-- Scanner Screen -->
+    <string name="scanner_title">Scan QR Code</string>
+    <string name="scanner_instruction">Point your camera at a QR code</string>
+    <string name="scanning">Scanning…</string>
+    <string name="camera_permission_required">Camera permission is required to scan QR codes</string>
+    <string name="grant_permission">Grant Permission</string>
+    <string name="permission_denied">Camera permission denied</string>
+    
+    <!-- Result Screen -->
+    <string name="result_title">Scan Result</string>
+    <string name="scan_again">Scan Again</string>
+    <string name="raw_data">Raw Data:</string>
+    <string name="parsed_json">Parsed JSON:</string>
+    <string name="valid_json">Valid JSON ✓</string>
+    <string name="invalid_json_x">Invalid JSON ✗</string>
+    <string name="invalid_json">Invalid JSON format</string>
+    <string name="copy_to_clipboard">Copy to Clipboard</string>
+    <string name="copied">Copied to clipboard</string>
+    
+    <!-- Errors -->
+    <string name="error_camera_init">Failed to initialize camera</string>
+    <string name="error_scanning">Error during scanning</string>
+    <string name="error_processing">Error processing QR code</string>
+    
+    <!-- PIN Verification -->
+    <string name="pin_verification_title">Verificación PIN</string>
+    <string name="pin_verification_message">Ingrese el PIN de 6 dígitos del paciente</string>
+    <string name="pin_hint">PIN (6 dígitos)</string>
+    <string name="confirm">Confirmar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="pin_error_length">El PIN debe tener 6 dígitos</string>
+    <string name="pin_error_incorrect">PIN incorrecto. Intente nuevamente</string>
+    <string name="pin_error_no_dni">No se encontró el campo DNI en el código QR</string>
+    <string name="pin_error_dni_short">El DNI debe tener al menos 6 dígitos</string>
+
+    <!-- Medical Report -->
+    <string name="medical_report_title">Informe Médico</string>
+    <string name="patient_info">Información del Paciente</string>
+    <string name="medical_info">Información Médica</string>
+    <string name="patient_name">Nombre</string>
+    <string name="last_name">Apellidos</string>
+    <string name="dni">DNI</string>
+    <string name="age">Edad</string>
+    <string name="gender">Género</string>
+    <string name="blood_type">Tipo de Sangre</string>
+    <string name="room">Habitación</string>
+    <string name="bed">Cama</string>
+    <string name="diagnosis">Diagnóstico</string>
+    <string name="treatment">Tratamiento</string>
+    <string name="medications">Medicamentos</string>
+    <string name="allergies">⚠ ALERGIAS</string>
+    <string name="doctor">Médico</string>
+    <string name="date">Fecha</string>
+    <string name="additional_notes">Notas Adicionales</string>
+    <string name="other_info">Información Adicional</string>
+    <string name="generated_date">Fecha de Generación</string>
+    <string name="generated_by">Generado Por</string>
+
+</resources>
