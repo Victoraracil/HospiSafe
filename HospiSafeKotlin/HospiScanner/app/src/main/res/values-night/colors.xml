@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Night mode colors -->
+    <color name="primary">#42A5F5</color>
+    <color name="primary_dark">#1976D2</color>
+    <color name="primary_light">#1E88E5</color>
+    
+    <color name="accent">#26C6DA</color>
+    <color name="accent_dark">#00ACC1</color>
+    
+    <color name="background">#121212</color>
+    <color name="surface">#1E1E1E</color>
+    <color name="surface_variant">#2C2C2C</color>
+    
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B0B0B0</color>
+    <color name="text_hint">#757575</color>
+</resources>
