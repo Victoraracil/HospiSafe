@@ -1,4 +1,6 @@
-﻿using HospiSafe.ViewModels.Base;
+﻿using HospiSafe.Models;
+using HospiSafe.Services;
+using HospiSafe.ViewModels.Base;
 using HospiSafe.Views;
 using System;
 using System.Collections.Generic;
@@ -13,10 +15,28 @@ namespace HospiSafe.ViewModels
     public class MainViewModel : BaseViewModel
     {
         private BaseViewModel _currentViewModel;
-        public string UserInitial { get; set; } = "U";
-        public string UserName { get; set; } = "Usuario";
-        public string UserRole { get; set; } = "Rol";
+        private Usuario? _currentUser;
 
+        private string _userInitial;
+        private string _userName;
+        private string _userRole;
+        public string UserInitial
+        {
+            get => _userInitial;
+            set => SetProperty(ref _userInitial, value);
+        }
+
+        public string UserName
+        {
+            get => _userName;
+            set => SetProperty(ref _userName, value);
+        }
+
+        public string UserRole
+        {
+            get => _userRole;
+            set => SetProperty(ref _userRole, value);
+        }
         public BaseViewModel CurrentViewModel
         {
             get => _currentViewModel;
@@ -32,6 +52,35 @@ namespace HospiSafe.ViewModels
             CurrentViewModel = new HomeViewModel(this);
             LogoutCommand = new RelayCommand(PerformExecuteLogout);
             VolverInicioCommand = new RelayCommand(PerformVolverInicio);
+
+            // Inicializar desde la sesión actual
+            _currentUser = SessionManager.CurrentUser;
+            ApplyUserToView(_currentUser);
+
+            SessionManager.CurrentUserChanged += OnSessionUserChanged;
+        }
+
+        private void OnSessionUserChanged()
+        {
+            _currentUser = SessionManager.CurrentUser;
+            ApplyUserToView(_currentUser);
+        }
+
+        private void ApplyUserToView(Usuario? user)
+        {
+            if (user == null)
+            {
+                UserInitial = "U";
+                UserName = "Usuario";
+                UserRole = "Sin sesión";
+            }
+            else
+            {
+                var displayName = $"{user.Nombre} {user.Apellidos}".Trim(); //usuario a mostrar
+                UserName = string.IsNullOrWhiteSpace(displayName) ? (user.CorreoElectronico ?? "Usuario") : displayName;
+                UserRole = user.Rol.ToString();
+                UserInitial = !string.IsNullOrEmpty(user.Nombre) ? user.Nombre.Substring(0, 1).ToUpper() : "U"; //inicial y sino U
+            }
         }
 
         private void PerformExecuteLogout(object obj)

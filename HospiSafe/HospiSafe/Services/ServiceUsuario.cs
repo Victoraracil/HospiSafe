@@ -26,9 +26,7 @@ namespace HospiSafe.Services
                 if (usuario == null)
                     return null;
 
-                string passwordHashIn = PasswordHelper.HashPassword(passwordIntroducida);
-
-                if (passwordHashIn != usuario.PasswordHash)
+                if (!PasswordHelper.VerifyPassword(passwordIntroducida, usuario.PasswordHash))
                     return null;
 
                 return usuario;
@@ -61,7 +59,6 @@ namespace HospiSafe.Services
 
                 usuario.PasswordHash = PasswordHelper
                     .HashPassword(usuario.PasswordHash);
-
 
                 await context.Usuarios.AddAsync(usuario);
                 await context.SaveChangesAsync();
