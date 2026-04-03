@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Primary Colors - Vibrant Blue -->
+    <color name="primary">#2196F3</color>
+    <color name="primary_dark">#1976D2</color>
+    <color name="primary_light">#BBDEFB</color>
+    
+    <!-- Accent Colors - Vibrant Teal -->
+    <color name="accent">#00BCD4</color>
+    <color name="accent_dark">#0097A7</color>
+    
+    <!-- Success Colors - Vibrant Green -->
+    <color name="success">#4CAF50</color>
+    <color name="success_light">#81C784</color>
+    
+    <!-- Error Colors - Vibrant Red -->
+    <color name="error">#F44336</color>
+    <color name="error_light">#E57373</color>
+    
+    <!-- Warning Colors - Vibrant Orange -->
+    <color name="warning">#FF9800</color>
+    
+    <!-- Background Colors -->
+    <color name="background">#FFFFFF</color>
+    <color name="surface">#F5F5F5</color>
+    <color name="surface_variant">#E0E0E0</color>
+    
+    <!-- Dark Theme Colors -->
+    <color name="card_dark_background">#1E1E1E</color>
+    <color name="card_darker_background">#121212</color>
+    <color name="text_dark_primary">#E0E0E0</color>
+    <color name="text_dark_secondary">#9E9E9E</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_hint">#BDBDBD</color>
+    <color name="text_white">#FFFFFF</color>
+    
+    <!-- Basic Colors -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    
+    <!-- Overlay Colors -->
+    <color name="overlay_dark">#80000000</color>
+    <color name="overlay_light">#40000000</color>
+</resources>
