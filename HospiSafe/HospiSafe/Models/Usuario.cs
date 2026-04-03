@@ -12,7 +12,10 @@ namespace HospiSafe.Models
         Sin_Asignar = 0,
         Admin = 1,
         Personal = 2,
-        Paciente = 3
+        Paciente = 3,
+        TecnicoLaboratorio = 4,
+        TecnicoRayos = 5,
+        Administracion = 6
     }
     public class Usuario : Persona
     {

@@ -21,7 +21,7 @@
                         <TextBlock Text="Seleccione un módulo para comenzar a trabajar." Foreground="White" Opacity="0.9" FontSize="16"/>
                     </StackPanel>
                 </Border>
-                <ItemsControl ItemsSource="{Binding Modules}">
+                <ItemsControl ItemsSource="{Binding Modulos}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel/>
@@ -29,7 +29,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Button Width="250" Height="250" Margin="10,20" Background="White" Command="{Binding DataContext.OpenModuleCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}">
+                            <Button Width="250" Height="250" Margin="10,20" Background="White" Command="{Binding DataContext.AbrirModuloCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Border Background="{TemplateBinding Background}" BorderBrush="#e2e8f0" BorderThickness="1" CornerRadius="12" Padding="20">

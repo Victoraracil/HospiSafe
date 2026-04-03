@@ -46,27 +46,42 @@ namespace HospiSafe.ViewModels
         public ICommand LogoutCommand { get; }
         public ICommand VolverInicioCommand { get; }
 
+        // permisos segun el rol
+        public bool PuedeVerUsuarios => PermisosService.PuedeAccederA(_currentUser, "Usuarios");
+        public bool PuedeVerPacientes => PermisosService.PuedeAccederA(_currentUser, "Pacientes");
+        public bool PuedeVerCitas => PermisosService.PuedeAccederA(_currentUser, "Citas");
+        public bool PuedeVerLaboratorio => PermisosService.PuedeAccederA(_currentUser, "Laboratorio");
+        public bool PuedeVerRadiologia => PermisosService.PuedeAccederA(_currentUser, "Radiologia");
+
+
         public MainViewModel()
         {
-            // Vista inicial es Home
-            CurrentViewModel = new HomeViewModel(this);
+            _currentUser = SessionManager.CurrentUser;
+            VistaUsuarioUI(_currentUser);
+
+            SessionManager.CurrentUserChanged += OnSessionUserChanged;
+
+            //Inicializacion de commands
             LogoutCommand = new RelayCommand(PerformExecuteLogout);
             VolverInicioCommand = new RelayCommand(PerformVolverInicio);
 
-            // Inicializar desde la sesión actual
-            _currentUser = SessionManager.CurrentUser;
-            ApplyUserToView(_currentUser);
-
-            SessionManager.CurrentUserChanged += OnSessionUserChanged;
+            CurrentViewModel = new HomeViewModel(this);
         }
 
         private void OnSessionUserChanged()
         {
             _currentUser = SessionManager.CurrentUser;
-            ApplyUserToView(_currentUser);
+            VistaUsuarioUI(_currentUser);
+
+            // Notificar cambios en todos los permisos
+            OnPropertyChanged(nameof(PuedeVerUsuarios));
+            OnPropertyChanged(nameof(PuedeVerPacientes));
+            OnPropertyChanged(nameof(PuedeVerCitas));
+            OnPropertyChanged(nameof(PuedeVerLaboratorio));
+            OnPropertyChanged(nameof(PuedeVerRadiologia));
         }
 
-        private void ApplyUserToView(Usuario? user)
+        private void VistaUsuarioUI(Usuario? user)
         {
             if (user == null)
             {
@@ -85,8 +100,10 @@ namespace HospiSafe.ViewModels
 
         private void PerformExecuteLogout(object obj)
         {
-            var loginWindow = new LoginView(); //objeto de login
+            SessionManager.CurrentUserChanged -= OnSessionUserChanged;
+            SessionManager.CurrentUser = null; //limpiamos la sesion de usuario accedido
 
+            var loginWindow = new LoginView(); //objeto de login
             Application.Current.MainWindow = loginWindow; //asociamos a ventana principal para que la muestre
 
             loginWindow.Show();
