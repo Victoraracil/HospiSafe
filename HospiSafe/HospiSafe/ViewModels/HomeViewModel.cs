@@ -1,8 +1,10 @@
-﻿using HospiSafe.ViewModels.Base;
+﻿using HospiSafe.Services;
+using HospiSafe.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -10,7 +12,8 @@ using System.Windows.Input;
 
 namespace HospiSafe.ViewModels
 {
-    public class Module
+    //Plantilla de modulo
+    public class Modulo
     {
         public string Title { get; set; }
         public string Icon { get; set; }
@@ -20,43 +23,89 @@ namespace HospiSafe.ViewModels
     public class HomeViewModel : BaseViewModel
     {
         private readonly MainViewModel _mainViewModel;
+        private ObservableCollection<Modulo> _modulos;
 
-        public ObservableCollection<Module> Modules { get; set; }
+        //atributo publico de _modulos
+        public ObservableCollection<Modulo> Modulos
+        {
+            get => _modulos;
+            set => SetProperty(ref _modulos, value);
+        }
 
         public ICommand LogoutCommand => _mainViewModel.LogoutCommand;
-        public ICommand OpenModuleCommand { get; }
+        public ICommand AbrirModuloCommand { get; }
 
         public HomeViewModel(MainViewModel mainViewModel)
         {
             _mainViewModel = mainViewModel;
+            //Inicializamos _modulos y cargamos
+            _modulos = new ObservableCollection<Modulo>();
             LoadModules();
-            OpenModuleCommand = new RelayCommand(ExecuteOpenModule);
+
+            AbrirModuloCommand = new RelayCommand(ExecuteAbrirModulo);
+
+            // cambios de sesion si el usuario ha cambiado
+            SessionManager.CurrentUserChanged += OnSessionChanged;
         }
 
+        private void OnSessionChanged()
+        {
+            LoadModules(); //carga los modulos en caso de cambiar la sesion
+        }
+
+        //Carga modulos
         private void LoadModules()
         {
-            Modules = new ObservableCollection<Module>
+            var todosModulos = new List<Modulo>
             {
-                new Module { Title = "Pacientes", Icon = "👥", Description = "Gestión de historial clínico y datos personales" },
-                new Module { Title = "Citas", Icon = "📅", Description = "Programación y control de agenda médica" },
-                new Module { Title = "Pruebas", Icon = "🔬", Description = "Resultados de laboratorios y diagnósticos" },
-                new Module { Title = "Usuarios", Icon = "⚙️", Description = "Administración de personal y permisos" }
+                new Modulo { Title = "Pacientes", Icon = "👥", Description = "Gestión de historial clínico y datos personales" },
+                new Modulo { Title = "Citas", Icon = "📅", Description = "Programación y control de agenda médica" },
+                new Modulo { Title = "Laboratorio", Icon = "🔬", Description = "Resultados de laboratorios y diagnósticos" },
+                new Modulo { Title = "Radiologia", Icon = "⚡", Description = "Estudios de radiología y pruebas de imagen" },
+                new Modulo { Title = "Usuarios", Icon = "⚙️", Description = "Administración de personal y permisos" }
+            };
+
+            var modulosPermitidos = todosModulos.Where(m => PuedeAcceder(m.Title)).ToList();
+
+            // Actualizar la lista
+            Modulos.Clear();
+            foreach (var modulo in modulosPermitidos)
+            {
+                Modulos.Add(modulo);
+            }
+        }
+
+        //comprueba si el usuario puede acceder
+        private bool PuedeAcceder(string modulo)
+        {
+            return modulo switch
+            {
+                "Pacientes" => _mainViewModel.PuedeVerPacientes,
+                "Citas" => _mainViewModel.PuedeVerCitas,
+                "Laboratorio" => _mainViewModel.PuedeVerLaboratorio,
+                "Radiologia" => _mainViewModel.PuedeVerRadiologia,
+                "Usuarios" => _mainViewModel.PuedeVerUsuarios,
+                _ => false //default
             };
         }
 
-        private void ExecuteOpenModule(object parameter)
+        private void ExecuteAbrirModulo(object parameter)
         {
-            if (parameter is not Module module)
+            if (parameter is not Modulo modulo)
                 return;
 
-            switch (module.Title)
+            switch (modulo.Title)
             {
                 case "Pacientes":
                     _mainViewModel.CurrentViewModel = new PacientesViewModel();
                     break;
 
-                case "Pruebas":
-                    _mainViewModel.CurrentViewModel = new PruebasViewModel(this._mainViewModel);
+                case "Laboratorio":
+                    _mainViewModel.CurrentViewModel = new PruebasViewModel(_mainViewModel);
+                    break;
+
+                case "Radiologia":
+                    MessageBox.Show("Módulo de Radiología en desarrollo", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
                     break;
 
                 case "Usuarios":

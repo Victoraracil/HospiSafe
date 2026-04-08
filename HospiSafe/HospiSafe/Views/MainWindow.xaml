@@ -11,10 +11,6 @@
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized">
 
-    <Window.DataContext>
-        <vm:MainViewModel/>
-    </Window.DataContext>
-
     <Window.Resources>
 
         <DataTemplate DataType="{x:Type vm:PruebasViewModel}">

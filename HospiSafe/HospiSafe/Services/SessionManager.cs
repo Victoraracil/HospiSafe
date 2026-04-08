@@ -21,7 +21,7 @@ namespace HospiSafe.Services
                 return _currentUser;
             }
 
-            set
+            set //invoka el cambio de usuario/sesion
             {
                 if (_currentUser != value)
                 {
