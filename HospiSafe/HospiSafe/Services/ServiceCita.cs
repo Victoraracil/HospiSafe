@@ -30,7 +30,7 @@ namespace HospiSafe.Services
             }
         }
 
-        public async Task<bool> CrearCitaAsync(Cita cita)
+        public async Task<Cita> CrearCitaAsync(Cita cita)
         {
             if (cita == null)
                 throw new ArgumentNullException(nameof(cita));
@@ -39,7 +39,9 @@ namespace HospiSafe.Services
             {
                 await context.Citas.AddAsync(cita);
                 await context.SaveChangesAsync();
-                return true;
+
+                // devolvemos la cita entera para asi tener sus datos en el viewmodel
+                return cita;
             }
         }
 

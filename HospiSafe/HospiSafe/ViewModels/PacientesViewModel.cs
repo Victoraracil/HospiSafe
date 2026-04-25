@@ -190,6 +190,11 @@ namespace HospiSafe.ViewModels
                 if (resultado)
                 {
                     MessageBox.Show("Paciente creado correctamente");
+                    // Registrar log
+                    using var slog = new ServiceLog();
+                    await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario, 
+                        $"Creó paciente DNI={DNI} Nombre={Nombre} {Apellidos}");
+
                     PerformCargarPacientes();
                     PerformCrearNuevoPaciente();
                 }
@@ -205,6 +210,10 @@ namespace HospiSafe.ViewModels
                 if (resultado)
                 {
                     MessageBox.Show("Paciente actualizado correctamente");
+                    using var slog = new ServiceLog();
+                    await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario, 
+                        $"Actualizó paciente Id={IdPaciente} DNI={DNI}");
+
                     PerformCargarPacientes();
                     PerformCrearNuevoPaciente();
                 }
@@ -227,6 +236,10 @@ namespace HospiSafe.ViewModels
             if (eliminado)
             {
                 MessageBox.Show("Paciente eliminado correctamente");
+                using var slog = new ServiceLog();
+                await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario, 
+                    $"Eliminó paciente Id={PacienteSelected.IdPaciente} DNI={PacienteSelected.DNI}");
+
                 PerformCargarPacientes();
                 PerformCrearNuevoPaciente();
             }

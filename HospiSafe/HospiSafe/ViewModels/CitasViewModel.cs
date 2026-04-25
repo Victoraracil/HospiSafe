@@ -137,6 +137,10 @@ namespace HospiSafe.ViewModels
 
                     await _serviceCita.ActualizarCitaAsync(CitaSeleccionada);
                     MessageBox.Show("Cita actualizada correctamente.", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // log si actualiza
+                    using var slog = new ServiceLog();
+                    await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario, $"Actualizó cita Id={CitaSeleccionada.IdCita} Fecha={CitaSeleccionada.Fecha}");
                 }
                 else
                 {
@@ -149,8 +153,15 @@ namespace HospiSafe.ViewModels
                         IdUsuario = UsuarioSeleccionado.IdUsuario
                     };
 
-                    await _serviceCita.CrearCitaAsync(nuevaCita);
+                    // guardamos la cita creada
+                    var creada = await _serviceCita.CrearCitaAsync(nuevaCita);
+
                     MessageBox.Show("Cita creada correctamente.", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    // guarda log de nuevacita
+                    using var slog = new ServiceLog();
+                    await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario, 
+                        $"Creó cita Id={creada.IdCita} Fecha={creada.Fecha} PacienteId={creada.IdPaciente}");
                 }
 
                 await CargarDatos();
@@ -171,10 +182,15 @@ namespace HospiSafe.ViewModels
             {
                 try
                 {
+                    var id = CitaSeleccionada.IdCita; //sacamos la id para tenerla para el log
                     await _serviceCita.EliminarCitaAsync(CitaSeleccionada.IdCita);
                     await CargarDatos();
                     LimpiarFormulario();
                     MessageBox.Show("Cita eliminada correctamente.", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    //log de eliminación
+                    using var slog = new ServiceLog();
+                    await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario, $"Eliminó cita Id={id}");
                 }
                 catch (Exception ex)
                 {
