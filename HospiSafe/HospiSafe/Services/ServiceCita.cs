@@ -89,12 +89,6 @@ namespace HospiSafe.Services
         {
             if (disposed)
                 return;
-
-            if (disposing)
-            {
-                // Free managed resources if needed
-            }
-
             disposed = true;
         }
 

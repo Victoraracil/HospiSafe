@@ -13,6 +13,7 @@ namespace HospiSafe.Models
         public DbSet<Paciente> Pacientes { get; set; }
         public DbSet<Cita> Citas { get; set; }
         public DbSet<Prueba> Pruebas { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
 
         public GestorDBContext() { }
