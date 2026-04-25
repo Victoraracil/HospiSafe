@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,8 +12,14 @@ namespace HospiSafe.Models
     {
         [Key]
         public int IdLog { get; set; }
-        public int? IdUsuario { get; set; } //puede ser null para cuando registrar acciones que no son de usuario
+        public int? IdUsuario { get; set; } //puede ser null
+
+        [Required]
+        [MaxLength(300)]
         public string Accion { get; set; } = string.Empty;
-        public DateTime Fecha { get; set; } = DateTime.UtcNow; //fecha actual, pasaremos siempre default y asi coge getdate de sql
+
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime Fecha { get; set; } = DateTime.UtcNow;
     }
 }

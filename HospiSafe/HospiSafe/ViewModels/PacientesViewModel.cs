@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Diagnostics;
 
 namespace HospiSafe.ViewModels
 {
@@ -191,9 +192,15 @@ namespace HospiSafe.ViewModels
                 {
                     MessageBox.Show("Paciente creado correctamente");
                     // Registrar log
-                    using var slog = new ServiceLog();
-                    await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario, 
-                        $"Creó paciente DNI={DNI} Nombre={Nombre} {Apellidos}");
+                    try
+                    {
+                        using var slog = new ServiceLog();
+                        await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario, $"Creó paciente DNI={DNI} Nombre={Nombre} {Apellidos}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"Error al registrar log: {ex}");
+                    }
 
                     PerformCargarPacientes();
                     PerformCrearNuevoPaciente();
@@ -210,9 +217,16 @@ namespace HospiSafe.ViewModels
                 if (resultado)
                 {
                     MessageBox.Show("Paciente actualizado correctamente");
-                    using var slog = new ServiceLog();
-                    await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario, 
-                        $"Actualizó paciente Id={IdPaciente} DNI={DNI}");
+                    try
+                    {
+                        using var slog = new ServiceLog();
+                        await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario, 
+                            $"Actualizó paciente Id={IdPaciente} DNI={DNI}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"Error al registrar log: {ex}");
+                    }
 
                     PerformCargarPacientes();
                     PerformCrearNuevoPaciente();
@@ -236,9 +250,15 @@ namespace HospiSafe.ViewModels
             if (eliminado)
             {
                 MessageBox.Show("Paciente eliminado correctamente");
-                using var slog = new ServiceLog();
-                await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario, 
-                    $"Eliminó paciente Id={PacienteSelected.IdPaciente} DNI={PacienteSelected.DNI}");
+                try
+                {
+                    using var slog = new ServiceLog();
+                    await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario, $"Eliminó paciente Id={PacienteSelected.IdPaciente} DNI={PacienteSelected.DNI}");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error al registrar log: {ex}");
+                }
 
                 PerformCargarPacientes();
                 PerformCrearNuevoPaciente();

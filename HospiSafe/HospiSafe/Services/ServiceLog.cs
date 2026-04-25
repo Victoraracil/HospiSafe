@@ -36,8 +36,8 @@ namespace HospiSafe.Services
             var log = new Log
             {
                 IdUsuario = idUsuario,
-                Accion = accion ?? string.Empty,
-                Fecha = DateTime.UtcNow
+                Accion = accion ?? string.Empty
+                // Fecha se asignara en la BD auto
             };
             return await CrearLogAsync(log);
         }

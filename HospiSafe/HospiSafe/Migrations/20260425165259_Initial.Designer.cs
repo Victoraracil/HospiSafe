@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospiSafe.Migrations
 {
     [DbContext(typeof(GestorDBContext))]
-    [Migration("20260205164746_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260425165259_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,6 +52,32 @@ namespace HospiSafe.Migrations
                     b.HasIndex("IdUsuario");
 
                     b.ToTable("Citas");
+                });
+
+            modelBuilder.Entity("HospiSafe.Models.Log", b =>
+                {
+                    b.Property<int>("IdLog")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdLog"));
+
+                    b.Property<string>("Accion")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<DateTime>("Fecha")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<int?>("IdUsuario")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdLog");
+
+                    b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("HospiSafe.Models.Paciente", b =>

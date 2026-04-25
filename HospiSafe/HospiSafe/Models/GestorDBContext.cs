@@ -21,5 +21,16 @@ namespace HospiSafe.Models
         {
             optionsBuilder.UseSqlServer("Server=localhost,1433;Database=HospiSafe_BD;User Id=sa;Password=SqlServer!2024;TrustServerCertificate=True;");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // propiedad Fecha en Log usa valor por defecto de la BD
+            modelBuilder.Entity<Log>()
+                .Property(l => l.Fecha)
+                .HasDefaultValueSql("GETUTCDATE()")
+                .ValueGeneratedOnAdd();
+        }
     }
 }

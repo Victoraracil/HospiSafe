@@ -51,6 +51,32 @@ namespace HospiSafe.Migrations
                     b.ToTable("Citas");
                 });
 
+            modelBuilder.Entity("HospiSafe.Models.Log", b =>
+                {
+                    b.Property<int>("IdLog")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdLog"));
+
+                    b.Property<string>("Accion")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<DateTime>("Fecha")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<int?>("IdUsuario")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdLog");
+
+                    b.ToTable("Logs");
+                });
+
             modelBuilder.Entity("HospiSafe.Models.Paciente", b =>
                 {
                     b.Property<int>("IdPaciente")
