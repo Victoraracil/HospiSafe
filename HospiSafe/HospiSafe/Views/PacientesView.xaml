@@ -133,83 +133,111 @@
                 Padding="25">
 
                 <StackPanel>
-
-                    <TextBlock Text="Datos del Paciente"
+                    
+                    <Border Background="#f1f5f9"
+                        CornerRadius="8"
+                        Padding="10"
+                        Margin="0,0,0,15">
+                        <TextBlock Text="Datos del Paciente"
                            FontSize="18"
                            FontWeight="Bold"
-                           Foreground="{StaticResource PrimaryColor}"
-                           Margin="0,0,0,15"/>
+                           Foreground="{StaticResource PrimaryColor}"/>
+                    </Border>
 
-                    <Grid>
+                    <!-- Filas y elementos -->
+                    <Grid Margin="0,0,0,10">
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <!-- Nombre -->
+                        <!-- INICIO DE CAMPOS AJUSTADOS COMO USUARIOSVIEW -->
                         <StackPanel Grid.Row="0" Grid.Column="0" Margin="5">
                             <TextBlock Text="Nombre"/>
-                            <TextBox Text="{Binding Nombre}" Height="34"/>
+                            <TextBox Text="{Binding Nombre}"
+                                Height="34"
+                                FontSize="16"
+                                Padding="4"/>
                         </StackPanel>
 
-                        <!-- Apellidos -->
+                        <!-- apellidos -->
                         <StackPanel Grid.Row="0" Grid.Column="1" Margin="5">
                             <TextBlock Text="Apellidos"/>
-                            <TextBox Text="{Binding Apellidos}" Height="34"/>
+                            <TextBox Text="{Binding Apellidos}"
+                                Height="34"
+                                FontSize="16"
+                                Padding="4"/>
                         </StackPanel>
 
-                        <!-- DNI -->
+                        <!-- dni -->
                         <StackPanel Grid.Row="1" Grid.Column="0" Margin="5">
                             <TextBlock Text="DNI"/>
-                            <TextBox Text="{Binding DNI}"
-                                 Height="34"/>
+                            <TextBox Text="{Binding DNI}" 
+                                Height="34" 
+                                Padding="8"/>
                         </StackPanel>
 
-                        <!-- Fecha -->
-                        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5">
-                            <TextBlock Text="Fecha nacimiento"/>
-                            <DatePicker SelectedDate="{Binding FechaNacimiento}"/>
+                        <!-- Fecha de nacimiento -->
+                        <StackPanel Grid.Row="1" Grid.Column="1" Margin="5" VerticalAlignment="Center">
+                            <TextBlock Text="Fecha de nacimiento"/>
+                            <DatePicker SelectedDate="{Binding FechaNacimiento}" Height="34" Padding="6" VerticalContentAlignment="Center"/>
                         </StackPanel>
 
-                        <!-- Teléfono -->
+                        <!-- telefono -->
                         <StackPanel Grid.Row="2" Grid.Column="0" Margin="5">
                             <TextBlock Text="Teléfono"/>
-                            <TextBox Text="{Binding Telefono}" Height="34"/>
+                            <TextBox Text="{Binding Telefono}" Height="34" Padding="8"/>
                         </StackPanel>
 
-                        <!-- Email -->
+                        <!-- correo electronico -->
                         <StackPanel Grid.Row="2" Grid.Column="1" Margin="5">
                             <TextBlock Text="Correo electrónico"/>
-                            <TextBox Text="{Binding CorreoElectronico}" Height="34"/>
+                            <TextBox Text="{Binding CorreoElectronico}" Height="34" Padding="8"/>
                         </StackPanel>
 
-                        <!-- Num SS -->
+                        <!-- numero seguridad social -->
                         <StackPanel Grid.Row="3" Grid.Column="0" Margin="5">
                             <TextBlock Text="Número Seguridad Social"/>
-                            <TextBox Text="{Binding NumSS}" Height="34"/>
+                            <TextBox Text="{Binding NumSS}" Height="34" Padding="8"/>
                         </StackPanel>
                     </Grid>
 
-                    <!-- BOTONES -->
+                    <!-- Botones -->
                     <StackPanel Orientation="Horizontal"
-                            HorizontalAlignment="Right"
-                            Margin="0,20,0,0">
+                        HorizontalAlignment="Right"
+                        Margin="0,15,0,0">
 
                         <Button Content="Guardar"
-                            Command="{Binding GuardarPacienteCommand}"
-                            Margin="0,0,10,0"/>
+                            Padding="18,8"
+                            FontSize="14"
+                            Background="{StaticResource PrimaryColor}"
+                            Foreground="White"
+                            BorderThickness="0"
+                            Margin="0,0,10,0"
+                            Command="{Binding GuardarPacienteCommand}"/>
 
                         <Button Content="Eliminar"
-                            Command="{Binding EliminarPacienteCommand}"
-                            Margin="0,0,10,0"/>
+                            Padding="18,8"
+                            FontSize="14"
+                            Background="#fee2e2"
+                            Foreground="#991b1b"
+                            BorderThickness="0"
+                            Margin="0,0,10,0"
+                            Command="{Binding EliminarPacienteCommand}"/>
 
                         <Button Content="Limpiar"
+                            Padding="18,8"
+                            Margin="0,0,10,0"
+                            FontSize="14"
+                            Background="Transparent"
+                            BorderBrush="#cbd5e1"
+                            BorderThickness="1"
                             Command="{Binding LimpiarDatosCommand}"/>
                     </StackPanel>
                 </StackPanel>
