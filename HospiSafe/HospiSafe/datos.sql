@@ -1,4 +1,25 @@
-﻿------------------------------------------------
+﻿USE HospiSafe_BD;
+GO
+
+------------------------------------------------
+-- CREAR TABLA LOGS
+------------------------------------------------
+
+IF NOT EXISTS (
+    SELECT * 
+    FROM sys.tables 
+    WHERE name = 'Logs'
+)
+BEGIN
+    CREATE TABLE Logs (
+        IdLog INT IDENTITY(1,1) PRIMARY KEY,
+        IdUsuario INT NULL,
+        Accion NVARCHAR(300) NOT NULL,
+        Fecha DATETIME NOT NULL DEFAULT GETDATE()
+    );
+END;
+
+------------------------------------------------
 -- 1) USUARIOS
 ------------------------------------------------
 
