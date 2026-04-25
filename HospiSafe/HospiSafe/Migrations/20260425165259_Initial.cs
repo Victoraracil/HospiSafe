@@ -6,11 +6,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HospiSafe.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Logs",
+                columns: table => new
+                {
+                    IdLog = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdUsuario = table.Column<int>(type: "int", nullable: true),
+                    Accion = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETUTCDATE()")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logs", x => x.IdLog);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Pacientes",
                 columns: table => new
@@ -134,6 +149,9 @@ namespace HospiSafe.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Citas");
+
+            migrationBuilder.DropTable(
+                name: "Logs");
 
             migrationBuilder.DropTable(
                 name: "Pruebas");

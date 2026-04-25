@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Diagnostics;
 
 namespace HospiSafe.ViewModels
 {
@@ -209,6 +210,18 @@ namespace HospiSafe.ViewModels
                 if (resultado)
                 {
                     MessageBox.Show("Usuario creado correctamente");
+                    // Registrar log
+                    try
+                    {
+                        using var slog = new ServiceLog();
+                        await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario,
+                            $"Creó usuario DNI={DNI} Nombre={Nombre} {Apellidos}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"Error al registrar log: {ex}");
+                    }
+
                     PerformCargarUsuarios();
                     PerformCrearNuevoUsuario();
                 }
@@ -224,6 +237,17 @@ namespace HospiSafe.ViewModels
                 if(actualizado)
                 {
                     MessageBox.Show("Usuario actualizado correctamente");
+                    try
+                    {
+                        using var slog = new ServiceLog();
+                        await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario,
+                            $"Actualizó usuario Id={IdUsuario} DNI={DNI}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"Error al registrar log: {ex}");
+                    }
+
                     PerformCargarUsuarios();
                     PerformCrearNuevoUsuario();
                 }
@@ -244,6 +268,17 @@ namespace HospiSafe.ViewModels
             if (eliminado)
             {
                 MessageBox.Show("Usuario eliminado");
+                try
+                {
+                    using var slog = new ServiceLog();
+                    await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario, 
+                        $"Eliminó usuario Id={UsuarioSelected.IdUsuario} DNI={UsuarioSelected.DNI}");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error al registrar log: {ex}");
+                }
+
                 PerformCargarUsuarios();
                 PerformCrearNuevoUsuario();
             }
