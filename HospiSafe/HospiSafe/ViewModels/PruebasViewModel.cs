@@ -4,11 +4,12 @@ using HospiSafe.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows;
+using System.Windows.Input;
 
 namespace HospiSafe.ViewModels
 {
@@ -18,6 +19,52 @@ namespace HospiSafe.ViewModels
 
         public string Titulo { get; } = "Laboratorio";
 
+        // estado de la busqueda
+        private bool _busquedaRealizada = false;
+        public bool BusquedaRealizada
+        {
+            get => _busquedaRealizada;
+            set => SetProperty(ref _busquedaRealizada, value);
+        }
+
+        // texto de busqueda
+        private string _textoBusqueda = "";
+        public string TextoBusqueda
+        {
+            get => _textoBusqueda;
+            set
+            {
+                if (SetProperty(ref _textoBusqueda, value))
+                    FiltrarPacientes();
+            }
+        }
+
+        // pacientes filtrados segun la busqueda
+        private ObservableCollection<Paciente> _pacientesFiltrados = new ObservableCollection<Paciente>();
+        public ObservableCollection<Paciente> PacientesFiltrados
+        {
+            get => _pacientesFiltrados;
+            set => SetProperty(ref _pacientesFiltrados, value);
+        }
+
+        // Paciente seleccionado en la busqueda
+        private Paciente _pacienteSeleccionado;
+        public Paciente PacienteSeleccionado
+        {
+            get => _pacienteSeleccionado;
+            set
+            {
+                if (SetProperty(ref _pacienteSeleccionado, value))
+                {
+                    if (value != null)
+                        CargarPruebasDelPaciente(value.IdPaciente);
+                    else
+                        Pruebas.Clear();
+                }
+            }
+        }
+
+        // pruebas del paciente
         private ObservableCollection<Prueba> _pruebas = new ObservableCollection<Prueba>();
         public ObservableCollection<Prueba> Pruebas
         {
@@ -25,15 +72,28 @@ namespace HospiSafe.ViewModels
             set => SetProperty(ref _pruebas, value);
         }
 
-        private ObservableCollection<Prueba> _pruebasOriginal = new ObservableCollection<Prueba>();
-
-        private ObservableCollection<Paciente> _pacientes = new ObservableCollection<Paciente>();
-        public ObservableCollection<Paciente> Pacientes
+        /* prueba seleccionada para a futuro que abrir el informe
+        private Prueba _pruebaSeleccionada;
+        public Prueba PruebaSeleccionada
         {
-            get => _pacientes;
-            set => SetProperty(ref _pacientes, value);
-        }
+            get => _pruebaSeleccionada;
+            set
+            {
+                if (SetProperty(ref _pruebaSeleccionada, value))
+                {
+                    if (value != null)
+                        VerInformePrueba(value);
+                }
+            }
+        }*/
 
+        // usuarios para nuevo informe 
+        /*
+
+        REVISARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+        CARGAR TODOS USUARIOS?? SOLO PACIENTES? SOLO MEDICOS
+
+        */
         private ObservableCollection<Usuario> _usuarios = new ObservableCollection<Usuario>();
         public ObservableCollection<Usuario> Usuarios
         {
@@ -41,13 +101,7 @@ namespace HospiSafe.ViewModels
             set => SetProperty(ref _usuarios, value);
         }
 
-        private Paciente _pacienteSeleccionado;
-        public Paciente PacienteSeleccionado
-        {
-            get => _pacienteSeleccionado;
-            set => SetProperty(ref _pacienteSeleccionado, value);
-        }
-
+        // crear nueva prueba, usuario seleccionado
         private Usuario _usuarioSeleccionado;
         public Usuario UsuarioSeleccionado
         {
@@ -55,6 +109,7 @@ namespace HospiSafe.ViewModels
             set => SetProperty(ref _usuarioSeleccionado, value);
         }
 
+        // form nueva prueba
         private string _tipoAnalisis = "";
         public string TipoAnalisis
         {
@@ -69,17 +124,6 @@ namespace HospiSafe.ViewModels
             set => SetProperty(ref _resultados, value);
         }
 
-        private string _textoBusqueda = "";
-        public string TextoBusqueda
-        {
-            get => _textoBusqueda;
-            set
-            {
-                if (SetProperty(ref _textoBusqueda, value))
-                    Filtrar();
-            }
-        }
-
         private bool _formVisible;
         public bool FormVisible
         {
@@ -87,7 +131,9 @@ namespace HospiSafe.ViewModels
             set => SetProperty(ref _formVisible, value);
         }
 
+        // Comandos
         public ICommand CargarCommand { get; }
+        public ICommand BuscarCommand { get; }
         public ICommand NuevoCommand { get; }
         public ICommand GuardarCommand { get; }
         public ICommand CancelarCommand { get; }
@@ -97,47 +143,101 @@ namespace HospiSafe.ViewModels
         {
             _mainViewModel = mainViewModel;
 
-            CargarCommand = new RelayCommand(async _ => await CargarAsync());
+            CargarCommand = new RelayCommand(async _ => await InicializarAsync());
+            BuscarCommand = new RelayCommand(async _ => await BuscarPacientesAsync());
             NuevoCommand = new RelayCommand(_ => MostrarFormulario());
             GuardarCommand = new RelayCommand(async _ => await GuardarAsync());
             CancelarCommand = new RelayCommand(_ => OcultarFormulario());
             VolverCommand = new RelayCommand(_ => Volver());
 
             FormVisible = false;
+            BusquedaRealizada = false;
         }
 
-        private void Volver()
-        {
-            _mainViewModel.CurrentViewModel = new HomeViewModel(_mainViewModel);
-        }
-
-        private async Task CargarAsync()
+        private async Task InicializarAsync()
         {
             try
             {
-                using (var sPac = new ServicePaciente())
-                using (var sUsu = new ServiceUsuario())
-                using (var sPrue = new ServicePrueba())
+                using (var serviceUsuario = new ServiceUsuario())
                 {
-                    var pacientes = await sPac.ListarPacientesAsync();
-                    var usuarios = await sUsu.ListarUsuariosAsync();
-                    var pruebas = await sPrue.ListarPruebasAsync();
-
-                    Pacientes = new ObservableCollection<Paciente>(pacientes);
+                    var usuarios = await serviceUsuario.ListarUsuariosAsync();
                     Usuarios = new ObservableCollection<Usuario>(usuarios);
-
-                    _pruebasOriginal = new ObservableCollection<Prueba>(pruebas);
-                    Pruebas = new ObservableCollection<Prueba>(pruebas);
-
-                    PacienteSeleccionado = Pacientes.FirstOrDefault();
                     UsuarioSeleccionado = Usuarios.FirstOrDefault();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al cargar datos: " + ex.Message);
+                MessageBox.Show("Error al cargar usuarios.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private async Task FiltrarPacientesAsync()
+        {
+            string t = TextoBusqueda?.Trim().ToLower() ?? "";
+
+            if (string.IsNullOrWhiteSpace(t))
+            {
+                PacientesFiltrados.Clear();
+                BusquedaRealizada = false;
+                return;
+            }
+
+            try
+            {
+                using (var servicePaciente = new ServicePaciente())
+                {
+                    var todosPacientes = await servicePaciente.ListarPacientesAsync();
+
+                    var filtrados = todosPacientes.Where(p =>
+                        (p.Nombre + " " + p.Apellidos).ToLower().Contains(t)
+                        || p.DNI.ToLower().Contains(t)
+                        || p.NumSS.ToLower().Contains(t)
+                    ).ToList(); // lista pacientes filtrados
+
+                    PacientesFiltrados = new ObservableCollection<Paciente>(filtrados);
+                    BusquedaRealizada = true; //completada la busqueda
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al buscar pacientes.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void FiltrarPacientes()
+        {
+            _ = FiltrarPacientesAsync();
+        }
+
+        private async Task BuscarPacientesAsync()
+        {
+            await FiltrarPacientesAsync();
+        }
+
+        // cargar pruebas del paciente seleccionado
+        private async void CargarPruebasDelPaciente(int idPaciente)
+        {
+            try
+            {
+                using (var servPruebas = new ServicePrueba())
+                {
+                    var pruebas = await servPruebas.ListarPruebasAsync();
+                    var pruebasDelPaciente = pruebas.Where(p => p.IdPaciente == idPaciente).ToList();
+
+                    Pruebas = new ObservableCollection<Prueba>(pruebasDelPaciente);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar pruebas del paciente.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /* ver informe
+        private void VerInformePrueba(Prueba prueba)
+        {
+            //Implementar vista o box window con el informe
+        }*/
 
         private void MostrarFormulario()
         {
@@ -185,11 +285,23 @@ namespace HospiSafe.ViewModels
 
                 using (var service = new ServicePrueba())
                 {
-                    await service.CrearPruebaAsync(nueva);
+                    var creada = await service.CrearPruebaAsync(nueva);
+                }
+
+                // log
+                try
+                {
+                    using var slog = new ServiceLog();
+                    await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario,
+                        $"Creó prueba de laboratorio TipoAnalisis={TipoAnalisis} PacienteId={PacienteSeleccionado.IdPaciente}");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error al registrar log: {ex}");
                 }
 
                 OcultarFormulario();
-                await CargarAsync();
+                CargarPruebasDelPaciente(PacienteSeleccionado.IdPaciente);
             }
             catch (Exception ex)
             {
@@ -197,24 +309,9 @@ namespace HospiSafe.ViewModels
             }
         }
 
-        private void Filtrar()
+        private void Volver()
         {
-            string t = TextoBusqueda?.Trim().ToLower() ?? "";
-
-            if (string.IsNullOrWhiteSpace(t))
-            {
-                Pruebas = new ObservableCollection<Prueba>(_pruebasOriginal);
-                return;
-            }
-
-            var filtradas = _pruebasOriginal.Where(p =>
-                (p.Paciente != null && ((p.Paciente.Nombre + " " + p.Paciente.Apellidos).ToLower().Contains(t)))
-                || (!string.IsNullOrEmpty(p.TipoAnalisis) && p.TipoAnalisis.ToLower().Contains(t))
-                || (!string.IsNullOrEmpty(p.Resultados) && p.Resultados.ToLower().Contains(t))
-            );
-
-            Pruebas = new ObservableCollection<Prueba>(filtradas);
+            _mainViewModel.CurrentViewModel = new HomeViewModel(_mainViewModel);
         }
     }
-
 }

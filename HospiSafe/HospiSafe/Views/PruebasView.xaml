@@ -9,10 +9,8 @@
              d:DesignWidth="1000"
              Background="{StaticResource Gray50}">
 
-    <Grid Margin="25">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -23,237 +21,440 @@
             </i:EventTrigger>
         </i:Interaction.Triggers>
 
-        <!-- Cabecera: volver + título + botón -->
-        <Grid Grid.Row="0" Margin="0,0,0,12">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <Button Grid.Column="0"
-                    Content="← Volver"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Foreground="#334155"
-                    Padding="6,4"
-                    Command="{Binding VolverCommand}"/>
-
-            <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
-                <TextBlock Text="🔬" FontSize="18" Margin="0,0,10,0"/>
-                <TextBlock Text="{Binding Titulo}" FontSize="20" FontWeight="Bold" Foreground="#0f172a"/>
-            </StackPanel>
-
-            <Button Grid.Column="2"
-                    Content="+ Nuevo Análisis"
-                    Background="{StaticResource PrimaryColor}"
-                    Foreground="White"
-                    Padding="12,6"
-                    BorderThickness="0"
-                    Height="32"
-                    Command="{Binding NuevoCommand}"/>
-        </Grid>
-
-        <!-- Buscador con lupa -->
-        <Border Grid.Row="1"
+        <!-- cabecera con titulo y boton de nuevo analisis -->
+        <Border Grid.Row="0"
                 Background="White"
-                CornerRadius="10"
                 BorderBrush="#e2e8f0"
-                BorderThickness="1"
-                Padding="10"
-                Margin="0,0,0,12">
+                BorderThickness="0,0,0,1"
+                Padding="20,15">
+
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBox Text="{Binding TextoBusqueda, UpdateSourceTrigger=PropertyChanged}"
-                         Height="32"
-                         Padding="10,5"
-                         BorderThickness="0"
-                         Background="#f8fafc"
-                         VerticalContentAlignment="Center"/>
-
-                <Border Grid.Column="1"
-                        Width="36"
-                        Height="32"
-                        CornerRadius="8"
-                        Background="#f1f5f9"
-                        Margin="8,0,0,0"
-                        VerticalAlignment="Center">
-                    <TextBlock Text="🔎"
-                               FontSize="14"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center"/>
-                </Border>
-            </Grid>
-        </Border>
-
-        <!-- Formulario -->
-        <Border Grid.Row="2"
-                Background="White"
-                CornerRadius="10"
-                BorderBrush="#e2e8f0"
-                BorderThickness="1"
-                Padding="12"
-                Margin="0,0,0,12">
-            <Border.Style>
-                <Style TargetType="Border">
-                    <Setter Property="Visibility" Value="Collapsed"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding FormVisible}" Value="True">
-                            <Setter Property="Visibility" Value="Visible"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Border.Style>
-
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0" Margin="0,0,0,10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="2*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
-                        <TextBlock Text="Paciente" FontSize="12" Foreground="#475569" Margin="0,0,0,4"/>
-                        <ComboBox ItemsSource="{Binding Pacientes}"
-                                  SelectedItem="{Binding PacienteSeleccionado}"
-                                  DisplayMemberPath="DNI"
-                                  Height="32"/>
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="1" Margin="0,0,10,0">
-                        <TextBlock Text="Usuario/Médico" FontSize="12" Foreground="#475569" Margin="0,0,0,4"/>
-                        <ComboBox ItemsSource="{Binding Usuarios}"
-                                  SelectedItem="{Binding UsuarioSeleccionado}"
-                                  DisplayMemberPath="CorreoElectronico"
-                                  Height="32"/>
-                    </StackPanel>
-
-                    <StackPanel Grid.Column="2">
-                        <TextBlock Text="Tipo de análisis" FontSize="12" Foreground="#475569" Margin="0,0,0,4"/>
-                        <TextBox Text="{Binding TipoAnalisis, UpdateSourceTrigger=PropertyChanged}"
-                                 Height="32"
-                                 Padding="10,5"
-                                 VerticalContentAlignment="Center"/>
-                    </StackPanel>
-                </Grid>
-
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBox Grid.Column="0"
-                             Text="{Binding Resultados, UpdateSourceTrigger=PropertyChanged}"
-                             Height="32"
-                             Padding="10,5"
-                             VerticalContentAlignment="Center"
-                             Margin="0,0,10,0"
-                             ToolTip="Resultados (opcional)"/>
-
-                    <Button Grid.Column="1"
-                            Content="Cancelar"
-                            Height="32"
-                            Padding="12,6"
-                            Margin="0,0,10,0"
-                            Command="{Binding CancelarCommand}"/>
-
-                    <Button Grid.Column="2"
-                            Content="Guardar"
-                            Height="32"
-                            Padding="12,6"
-                            Background="{StaticResource PrimaryColor}"
-                            Foreground="White"
-                            BorderThickness="0"
-                            Command="{Binding GuardarCommand}"/>
-                </Grid>
-            </Grid>
-        </Border>
-
-        <!-- Tabla fija -->
-        <Border Grid.Row="3"
-                Background="White"
-                CornerRadius="10"
-                BorderBrush="#e2e8f0"
-                BorderThickness="1"
-                Padding="10">
-
-            <Grid>
-                <DataGrid ItemsSource="{Binding Pruebas}"
-                          AutoGenerateColumns="False"
-                          CanUserAddRows="False"
-                          IsReadOnly="True"
-                          HeadersVisibility="Column"
-                          GridLinesVisibility="None"
-                          RowHeaderWidth="0"
-                          FontSize="12"
-                          CanUserResizeColumns="False"
-                          HorizontalScrollBarVisibility="Disabled"
-                          VerticalScrollBarVisibility="Auto">
-
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="FECHA"
-                                            Binding="{Binding Fecha, StringFormat=\{0:dd/MM/yyyy HH:mm\}}"
-                                            Width="150" />
-
-                        <DataGridTextColumn Header="PACIENTE"
-                                            Binding="{Binding Paciente.DNI}"
-                                            Width="120" />
-
-                        <DataGridTextColumn Header="USUARIO"
-                                            Binding="{Binding Usuario.CorreoElectronico}"
-                                            Width="220" />
-
-                        <DataGridTextColumn Header="TIPO"
-                                            Binding="{Binding TipoAnalisis}"
-                                            Width="200" />
-
-                        <DataGridTextColumn Header="ESTADO"
-                                            Binding="{Binding Estado}"
-                                            Width="110" />
-
-                        <DataGridTextColumn Header="RESULTADOS"
-                                            Binding="{Binding Resultados}"
-                                            Width="*" />
-                    </DataGrid.Columns>
-                </DataGrid>
-
-                <!-- Mensaje vacío -->
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <StackPanel.Style>
-                        <Style TargetType="StackPanel">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Pruebas.Count}" Value="0">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </StackPanel.Style>
-
-                    <TextBlock Text="⚗️" FontSize="40" Opacity="0.25" HorizontalAlignment="Center"/>
-                    <TextBlock Text="No hay análisis registrados"
-                               FontSize="14"
-                               Foreground="#64748b"
-                               HorizontalAlignment="Center"
-                               Margin="0,10,0,0"/>
-                    <Button Content="Cargar"
-                            Width="120"
-                            Margin="0,15,0,0"
-                            Command="{Binding CargarCommand}"/>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBlock Text="🔬" FontSize="24" Margin="0,0,12,0"/>
+                    <TextBlock Text="{Binding Titulo}"
+                               FontSize="22"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource PrimaryColor}"/>
                 </StackPanel>
+
+                <Button Grid.Column="1"
+                        Content="+ Nuevo Análisis"
+                        Padding="18,8"
+                        FontSize="14"
+                        Background="{StaticResource PrimaryColor}"
+                        Foreground="White"
+                        BorderThickness="0"
+                        Command="{Binding NuevoCommand}"/>
             </Grid>
         </Border>
+
+        <!-- contenido central -->
+        <Grid Grid.Row="1" Margin="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2.5*"/>
+                <ColumnDefinition Width="3.5*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- izq -->
+            <Border Grid.Column="0"
+                    Background="White"
+                    CornerRadius="12"
+                    BorderBrush="#e2e8f0"
+                    BorderThickness="1"
+                    Padding="20"
+                    Margin="0,0,15,0">
+
+                <StackPanel>
+                    <TextBlock Text="Buscar Paciente"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource PrimaryColor}"
+                               Margin="0,0,0,15"/>
+
+                    <!-- cuadro de busqueda -->
+                    <StackPanel Margin="0,0,0,15">
+                        <TextBlock Text="Nombre, DNI o Seguridad Social"
+                                   FontSize="12"
+                                   Foreground="#475569"
+                                   Margin="0,0,0,6"/>
+                        <TextBox Text="{Binding TextoBusqueda, UpdateSourceTrigger=PropertyChanged}"
+                                 Height="40"
+                                 Padding="12,10"
+                                 FontSize="14"
+                                 VerticalContentAlignment="Center"
+                                 Background="#f8fafc"
+                                 BorderBrush="#cbd5e1"
+                                 BorderThickness="1"/>
+                    </StackPanel>
+
+                    <!-- ayuda a usuario, cuadro descripccion -->
+                    <TextBlock Text="Comienza a escribir para filtrar pacientes"
+                               FontSize="11"
+                               Foreground="#94a3b8"
+                               Margin="0,0,0,20"
+                               TextWrapping="Wrap"/>
+
+                    <Border Height="1" Background="#e2e8f0" Margin="0,0,0,20"/>
+
+                    <!-- resultados -->
+                    <TextBlock Text="Resultados"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               Foreground="#0f172a"
+                               Margin="0,0,0,10"/>
+
+                    <!-- listbox -->
+                    <ListBox ItemsSource="{Binding PacientesFiltrados}"
+                             SelectedItem="{Binding PacienteSeleccionado}"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             MaxHeight="400"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto">
+
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#f8fafc"
+                                        CornerRadius="8"
+                                        Padding="12"
+                                        Margin="0,0,0,8"
+                                        BorderBrush="#cbd5e1"
+                                        BorderThickness="1">
+
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold"
+                                                   FontSize="13"
+                                                   Foreground="#0f172a"
+                                                   Margin="0,0,0,4">
+                                            <TextBlock.Text>
+                                                <MultiBinding StringFormat="👤 {0} {1}">
+                                                    <Binding Path="Nombre"/>
+                                                    <Binding Path="Apellidos"/>
+                                                </MultiBinding>
+                                            </TextBlock.Text>
+                                        </TextBlock>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <TextBlock Grid.Column="0"
+                                                       Text="{Binding DNI, StringFormat='DNI: {0}'}"
+                                                       FontSize="12"
+                                                       Foreground="#475569"/>
+                                            <!-- para separar queda muy junto sino-->
+                                            <TextBlock Grid.Column="1"
+                                                       Text="   "
+                                                       FontSize="14"
+                                                       VerticalAlignment="Center"
+                                                       Foreground="#475569"/>
+
+                                            <TextBlock Grid.Column="2"
+                                                       Text="{Binding NumSS, StringFormat='SIP: {0}'}"
+                                                       FontSize="12"
+                                                       Foreground="#475569"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <!-- visibilidad segun busqueda y resultados -->
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,40,0,0">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <!--si no tiene resultados-->
+                                            <Condition Binding="{Binding BusquedaRealizada}" Value="True"/>
+                                            <Condition Binding="{Binding PacientesFiltrados.Count}" Value="0"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+
+                        <!-- si busqueda true y 0 resultados-->
+                        <TextBlock Text="🔍"
+                                   FontSize="32"
+                                   Opacity="0.3"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="No se encontraron pacientes"
+                                   FontSize="12"
+                                   Foreground="#94a3b8"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,10,0,0"/>
+                    </StackPanel>
+
+                    <!-- al inicio de pre busqueda -->
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,40,0,0">
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding BusquedaRealizada}" Value="True">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+
+                        <TextBlock Text="📋"
+                                   FontSize="32"
+                                   Opacity="0.3"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Escribe para buscar un paciente"
+                                   FontSize="12"
+                                   Foreground="#94a3b8"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,10,0,0"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- derecha -->
+            <Border Grid.Column="1"
+                    Background="White"
+                    CornerRadius="12"
+                    BorderBrush="#e2e8f0"
+                    BorderThickness="1"
+                    Padding="20">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- paciente seleccionado -->
+                    <Border Grid.Row="0"
+                            Background="#f1f5f9"
+                            CornerRadius="8"
+                            Padding="15"
+                            Margin="0,0,0,15">
+
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Visibility" Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding PacienteSeleccionado}" Value="{x:Null}">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Border Grid.Column="0"
+                                    Width="50"
+                                    Height="50"
+                                    Background="{StaticResource PrimaryLightColor}"
+                                    CornerRadius="25"
+                                    Margin="0,0,15,0">
+                                <TextBlock Text="👤"
+                                           FontSize="24"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"/>
+                            </Border>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock FontWeight="Bold"
+                                           FontSize="14"
+                                           Foreground="#0f172a"
+                                           Margin="0,0,0,4">
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="Paciente: {0} {1}">
+                                            <Binding Path="PacienteSeleccionado.Nombre"/>
+                                            <Binding Path="PacienteSeleccionado.Apellidos"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock Grid.Column="0"
+                                               Text="{Binding PacienteSeleccionado.DNI, StringFormat='DNI: {0}'}"
+                                               FontSize="11"
+                                               Foreground="#475569"
+                                               Margin="0,0,20,0"/>
+
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding PacienteSeleccionado.NumSS, StringFormat='SS: {0}'}"
+                                               FontSize="11"
+                                               Foreground="#475569"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <!-- Formulario nueva prueba -->
+                    <Border Grid.Row="1"
+                            Background="#fee2e2"
+                            CornerRadius="8"
+                            Padding="15"
+                            Margin="0,0,0,15">
+
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding FormVisible}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                        
+                        <!--registrar nueva prueba-->
+                        <StackPanel>
+                            <TextBlock Text="Nueva Prueba de Laboratorio"
+                                       FontWeight="Bold"
+                                       FontSize="13"
+                                       Foreground="#991b1b"
+                                       Margin="0,0,0,10"/>
+
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                    <TextBlock Text="Usuario/Médico" FontSize="11" Foreground="#475569" Margin="0,0,0,4"/>
+                                    <!-- Cargar medicos y no todos los usuarios
+                                    <ComboBox ItemsSource="{Binding Usuarios}"
+                                              SelectedItem="{Binding UsuarioSeleccionado}"
+                                              DisplayMemberPath="Nombre"
+                                              Height="32"/> -->
+                                </StackPanel>
+                                
+                                <!-- tipo quiza mejor combobox con  departamentos? -->
+                                <StackPanel Grid.Column="1">
+                                    <TextBlock Text="Tipo de Análisis" FontSize="11" Foreground="#475569" Margin="0,0,0,4"/>
+                                    <TextBox Text="{Binding TipoAnalisis, UpdateSourceTrigger=PropertyChanged}"
+                                             Height="32"
+                                             Padding="10,6"
+                                             VerticalContentAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+
+                            <StackPanel Margin="0,0,0,10">
+                                <TextBlock Text="Resultados (opcional)" FontSize="11" Foreground="#475569" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding Resultados, UpdateSourceTrigger=PropertyChanged}"
+                                         Height="60"
+                                         Padding="10,6"
+                                         VerticalAlignment="Top"
+                                         TextWrapping="Wrap"
+                                         AcceptsReturn="True"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Content="Cancelar"
+                                        Padding="12,6"
+                                        Margin="0,0,10,0"
+                                        Background="Transparent"
+                                        BorderBrush="#cbd5e1"
+                                        BorderThickness="1"
+                                        Command="{Binding CancelarCommand}"/>
+
+                                <Button Content="Guardar"
+                                        Padding="12,6"
+                                        Background="{StaticResource PrimaryColor}"
+                                        Foreground="White"
+                                        BorderThickness="0"
+                                        Command="{Binding GuardarCommand}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- pruebas -->
+                    <Border Grid.Row="2" BorderBrush="#e2e8f0" BorderThickness="1" CornerRadius="8">
+                        <Grid>
+                            <!-- me sigue dando error, repasar como implementar -->
+                            <DataGrid ItemsSource="{Binding Pruebas}"
+                                      SelectedItem="{Binding PruebaSeleccionada}" 
+                                      AutoGenerateColumns="False"
+                                      CanUserAddRows="False"
+                                      IsReadOnly="True"
+                                      HeadersVisibility="Column"
+                                      GridLinesVisibility="None"
+                                      RowHeaderWidth="0"
+                                      FontSize="12"
+                                      HorizontalScrollBarVisibility="Disabled"
+                                      VerticalScrollBarVisibility="Auto"
+                                      Background="White">
+
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="FECHA"
+                                                        Binding="{Binding Fecha, StringFormat=\{0:dd/MM/yyyy HH:mm\}}"
+                                                        Width="140"/>
+
+                                    <DataGridTextColumn Header="TIPO DE ANÁLISIS"
+                                                        Binding="{Binding TipoAnalisis}"
+                                                        Width="180"/>
+
+                                    <DataGridTextColumn Header="ESTADO"
+                                                        Binding="{Binding Estado}"
+                                                        Width="100"/>
+
+                                    <DataGridTextColumn Header="RESULTADOS"
+                                                        Binding="{Binding Resultados}"
+                                                        Width="*"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+
+                            <!-- mensaje vacio sin pruebas que mostrar -->
+                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <StackPanel.Style>
+                                    <Style TargetType="StackPanel">
+                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Pruebas.Count}" Value="0">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </StackPanel.Style>
+
+                                <TextBlock Text="🧪"
+                                           FontSize="40"
+                                           Opacity="0.25"
+                                           HorizontalAlignment="Center"/>
+                                <TextBlock Text="Selecciona un paciente para ver sus pruebas"
+                                           FontSize="13"
+                                           Foreground="#94a3b8"
+                                           HorizontalAlignment="Center"
+                                           Margin="0,10,0,0"
+                                           TextAlignment="Center"
+                                           TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </UserControl>
