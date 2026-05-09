@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospiSafe.Migrations
 {
     [DbContext(typeof(GestorDBContext))]
-    [Migration("20260425165259_Initial")]
+    [Migration("20260509161841_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -187,6 +187,9 @@ namespace HospiSafe.Migrations
                     b.Property<DateTime>("FechaNacimiento")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("IdPaciente")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -204,6 +207,10 @@ namespace HospiSafe.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdUsuario");
+
+                    b.HasIndex("IdPaciente")
+                        .IsUnique()
+                        .HasFilter("[IdPaciente] IS NOT NULL");
 
                     b.ToTable("Usuarios");
                 });
@@ -246,9 +253,20 @@ namespace HospiSafe.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("HospiSafe.Models.Usuario", b =>
+                {
+                    b.HasOne("HospiSafe.Models.Paciente", "Paciente")
+                        .WithOne("UsuarioCuenta")
+                        .HasForeignKey("HospiSafe.Models.Usuario", "IdPaciente");
+
+                    b.Navigation("Paciente");
+                });
+
             modelBuilder.Entity("HospiSafe.Models.Paciente", b =>
                 {
                     b.Navigation("Citas");
+
+                    b.Navigation("UsuarioCuenta");
                 });
 
             modelBuilder.Entity("HospiSafe.Models.Usuario", b =>

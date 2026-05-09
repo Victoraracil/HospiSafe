@@ -53,6 +53,7 @@ namespace HospiSafe.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Rol = table.Column<int>(type: "int", nullable: false),
+                    IdPaciente = table.Column<int>(type: "int", nullable: true),
                     Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Apellidos = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     DNI = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
@@ -63,6 +64,11 @@ namespace HospiSafe.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.IdUsuario);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Pacientes_IdPaciente",
+                        column: x => x.IdPaciente,
+                        principalTable: "Pacientes",
+                        principalColumn: "IdPaciente");
                 });
 
             migrationBuilder.CreateTable(
@@ -142,6 +148,13 @@ namespace HospiSafe.Migrations
                 name: "IX_Pruebas_IdUsuario",
                 table: "Pruebas",
                 column: "IdUsuario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_IdPaciente",
+                table: "Usuarios",
+                column: "IdPaciente",
+                unique: true,
+                filter: "[IdPaciente] IS NOT NULL");
         }
 
         /// <inheritdoc />
@@ -157,10 +170,10 @@ namespace HospiSafe.Migrations
                 name: "Pruebas");
 
             migrationBuilder.DropTable(
-                name: "Pacientes");
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "Usuarios");
+                name: "Pacientes");
         }
     }
 }

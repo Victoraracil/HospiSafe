@@ -65,6 +65,8 @@ namespace HospiSafe.ViewModels
 
             try
             {
+                System.Diagnostics.Debug.WriteLine($"[LOGIN] Correo='{Correo}' PasswordLength={password?.Length ?? 0}");
+
                 using (var service = new ServiceUsuario())
                 {
                     var usuario = await service.LoginAsync(Correo.Trim(), password);

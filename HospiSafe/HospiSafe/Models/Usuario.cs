@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,11 +13,12 @@ namespace HospiSafe.Models
         Sin_Asignar = 0,
         Admin = 1,
         Personal = 2,
-        Paciente = 3,
-        TecnicoLaboratorio = 4,
-        TecnicoRayos = 5,
-        Administracion = 6
+        TecnicoLaboratorio = 3,
+        TecnicoRayos = 4,
+        Administracion = 5
     }
+
+    // usuario del sistema: personal que accede a la aplicación
     public class Usuario : Persona
     {
         [Key]
@@ -28,6 +30,14 @@ namespace HospiSafe.Models
         [Required]
         public RolUsuario Rol { get; set; }
 
+        // relacion opcional con Paciente: si un paciente necesita una cuenta, la vinculamos por este id
+        public int? IdPaciente { get; set; }
+
+        [ForeignKey(nameof(IdPaciente))]
+        public virtual Paciente? Paciente { get; set; }
+
+        // relacion --> un usuario puede crear/registrar citas
+        [InverseProperty(nameof(Cita.Usuario))]
         public virtual ICollection<Cita> Citas { get; set; } = new List<Cita>();
     }
 }

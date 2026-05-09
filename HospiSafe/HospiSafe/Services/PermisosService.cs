@@ -50,11 +50,6 @@ namespace HospiSafe.Services
                 {
                     "Radiologia"
                 }
-            },
-
-            // paciente: sin acceso
-            {
-                RolUsuario.Paciente, new HashSet<string>()
             }
         };
 

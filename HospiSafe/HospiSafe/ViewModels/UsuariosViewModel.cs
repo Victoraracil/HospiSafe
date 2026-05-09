@@ -176,7 +176,7 @@ namespace HospiSafe.ViewModels
             FechaNacimiento = DateTime.Today;
             Telefono = string.Empty;
             CorreoElectronico = string.Empty;
-            Rol = RolUsuario.Paciente;
+            Rol = RolUsuario.Sin_Asignar;
             Password = string.Empty;
         }
 
