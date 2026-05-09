@@ -11,7 +11,8 @@ namespace HospiSafe.Models
     public enum EstadoPrueba
     {
         Pendiente = 0,
-        Completada = 1
+        En_progreso = 1,
+        Completada = 2
     }
 
     public class Prueba
@@ -36,13 +37,17 @@ namespace HospiSafe.Models
         public int IdPaciente { get; set; }
 
         [ForeignKey(nameof(IdPaciente))]
-        public Paciente Paciente { get; set; } = null!;
+        public virtual Paciente Paciente { get; set; } = null!;
 
         [Required]
         public int IdUsuario { get; set; }
 
+        //quien la registra
         [ForeignKey(nameof(IdUsuario))]
-        public Usuario Usuario { get; set; } = null!;
-    }
+        public virtual Usuario Usuario { get; set; } = null!;
 
+        // vuelta fk de informe
+        [InverseProperty(nameof(Informe.Prueba))]
+        public virtual Informe Informe { get; set; } = null!;
+    }
 }

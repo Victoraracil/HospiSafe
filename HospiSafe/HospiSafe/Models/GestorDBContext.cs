@@ -13,10 +13,11 @@ namespace HospiSafe.Models
         public DbSet<Paciente> Pacientes { get; set; }
         public DbSet<Cita> Citas { get; set; }
         public DbSet<Prueba> Pruebas { get; set; }
+        public DbSet<Informe> Informes { get; set; }
         public DbSet<Log> Logs { get; set; }
 
-
         public GestorDBContext() { }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=localhost,1433;Database=HospiSafe_BD;User Id=sa;Password=SqlServer!2024;TrustServerCertificate=True;");
@@ -31,6 +32,13 @@ namespace HospiSafe.Models
                 .Property(l => l.Fecha)
                 .HasDefaultValueSql("GETUTCDATE()")
                 .ValueGeneratedOnAdd();
+
+            // relación 1:1 entre Prueba e Informe
+            modelBuilder.Entity<Prueba>()
+                .HasOne(p => p.Informe)
+                .WithOne(i => i.Prueba)
+                .HasForeignKey<Informe>(i => i.IdPrueba)
+                .IsRequired();
         }
     }
 }
