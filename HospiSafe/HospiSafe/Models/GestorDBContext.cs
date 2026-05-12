@@ -33,12 +33,12 @@ namespace HospiSafe.Models
                 .HasDefaultValueSql("GETUTCDATE()")
                 .ValueGeneratedOnAdd();
 
-            // relación 1:1 entre Prueba e Informe
-            modelBuilder.Entity<Prueba>()
-                .HasOne(p => p.Informe)
-                .WithOne(i => i.Prueba)
-                .HasForeignKey<Informe>(i => i.IdPrueba)
-                .IsRequired();
+            //para que al eliminar informes o pacientes no haya eliminacion en cascada
+            modelBuilder.Entity<Informe>()
+                .HasOne(i => i.Paciente)
+                .WithMany()
+                .HasForeignKey(i => i.IdPaciente)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

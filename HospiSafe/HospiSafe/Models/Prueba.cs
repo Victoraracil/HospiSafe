@@ -43,8 +43,8 @@ namespace HospiSafe.Models
         [ForeignKey(nameof(IdUsuario))]
         public virtual Usuario Usuario { get; set; } = null!;
 
-        // vuelta fk de informe
+        // vuelta fk de informes
         [InverseProperty(nameof(Informe.Prueba))]
-        public virtual Informe Informe { get; set; } = null!;
+        public virtual ICollection<Informe> Informes { get; set; } = new List<Informe>();
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HospiSafe.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -108,7 +108,6 @@ namespace HospiSafe.Migrations
                     Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TipoAnalisis = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Estado = table.Column<int>(type: "int", nullable: false),
-                    Resultados = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     IdPaciente = table.Column<int>(type: "int", nullable: false),
                     IdUsuario = table.Column<int>(type: "int", nullable: false)
                 },
@@ -129,6 +128,34 @@ namespace HospiSafe.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Informes",
+                columns: table => new
+                {
+                    IdInforme = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Contenido = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: false),
+                    IdPrueba = table.Column<int>(type: "int", nullable: false),
+                    IdPaciente = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Informes", x => x.IdInforme);
+                    table.ForeignKey(
+                        name: "FK_Informes_Pacientes_IdPaciente",
+                        column: x => x.IdPaciente,
+                        principalTable: "Pacientes",
+                        principalColumn: "IdPaciente",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Informes_Pruebas_IdPrueba",
+                        column: x => x.IdPrueba,
+                        principalTable: "Pruebas",
+                        principalColumn: "IdPrueba",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Citas_IdPaciente",
                 table: "Citas",
@@ -138,6 +165,16 @@ namespace HospiSafe.Migrations
                 name: "IX_Citas_IdUsuario",
                 table: "Citas",
                 column: "IdUsuario");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Informes_IdPaciente",
+                table: "Informes",
+                column: "IdPaciente");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Informes_IdPrueba",
+                table: "Informes",
+                column: "IdPrueba");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pruebas_IdPaciente",
@@ -162,6 +199,9 @@ namespace HospiSafe.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Citas");
+
+            migrationBuilder.DropTable(
+                name: "Informes");
 
             migrationBuilder.DropTable(
                 name: "Logs");

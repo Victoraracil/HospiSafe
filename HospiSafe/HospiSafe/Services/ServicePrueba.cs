@@ -48,18 +48,6 @@ namespace HospiSafe.Services
                 await context.Pruebas.AddAsync(prueba);
                 await context.SaveChangesAsync();
 
-                // crear informe vacio asociado a la prueba que se rellenará a posterior
-                var informe = new Informe
-                {
-                    IdPrueba = prueba.IdPrueba,
-                    IdPaciente = prueba.IdPaciente,
-                    Fecha = DateTime.UtcNow,
-                    Contenido = string.Empty
-                };
-
-                await context.Informes.AddAsync(informe);
-                await context.SaveChangesAsync();
-
                 return true;
             }
         }
@@ -80,7 +68,6 @@ namespace HospiSafe.Services
                 existente.Fecha = prueba.Fecha;
                 existente.TipoAnalisis = prueba.TipoAnalisis;
                 existente.Estado = prueba.Estado;
-                existente.Resultados = prueba.Resultados;
                 existente.IdPaciente = prueba.IdPaciente;
                 existente.IdUsuario = prueba.IdUsuario;
 

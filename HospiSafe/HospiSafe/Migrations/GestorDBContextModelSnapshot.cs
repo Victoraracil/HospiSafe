@@ -51,6 +51,37 @@ namespace HospiSafe.Migrations
                     b.ToTable("Citas");
                 });
 
+            modelBuilder.Entity("HospiSafe.Models.Informe", b =>
+                {
+                    b.Property<int>("IdInforme")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdInforme"));
+
+                    b.Property<string>("Contenido")
+                        .IsRequired()
+                        .HasMaxLength(5000)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdPaciente")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdPrueba")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdInforme");
+
+                    b.HasIndex("IdPaciente");
+
+                    b.HasIndex("IdPrueba");
+
+                    b.ToTable("Informes");
+                });
+
             modelBuilder.Entity("HospiSafe.Models.Log", b =>
                 {
                     b.Property<int>("IdLog")
@@ -141,10 +172,6 @@ namespace HospiSafe.Migrations
                     b.Property<int>("IdUsuario")
                         .HasColumnType("int");
 
-                    b.Property<string>("Resultados")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
                     b.Property<string>("TipoAnalisis")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -231,6 +258,25 @@ namespace HospiSafe.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("HospiSafe.Models.Informe", b =>
+                {
+                    b.HasOne("HospiSafe.Models.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("IdPaciente")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HospiSafe.Models.Prueba", "Prueba")
+                        .WithMany("Informes")
+                        .HasForeignKey("IdPrueba")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Paciente");
+
+                    b.Navigation("Prueba");
+                });
+
             modelBuilder.Entity("HospiSafe.Models.Prueba", b =>
                 {
                     b.HasOne("HospiSafe.Models.Paciente", "Paciente")
@@ -264,6 +310,11 @@ namespace HospiSafe.Migrations
                     b.Navigation("Citas");
 
                     b.Navigation("UsuarioCuenta");
+                });
+
+            modelBuilder.Entity("HospiSafe.Models.Prueba", b =>
+                {
+                    b.Navigation("Informes");
                 });
 
             modelBuilder.Entity("HospiSafe.Models.Usuario", b =>

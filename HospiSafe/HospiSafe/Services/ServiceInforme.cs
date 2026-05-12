@@ -50,11 +50,7 @@ namespace HospiSafe.Services
                 var prueba = await context.Pruebas.FindAsync(informe.IdPrueba);
                 if (prueba == null) return false;
 
-                // comprobar que no exista ya informe para esa prueba
-                bool yaTiene = await context.Informes.AnyAsync(i => i.IdPrueba == informe.IdPrueba);
-                if (yaTiene) return false;
-
-                // asegurar paciente-prueba
+                // comprobamos que es para ese paciente
                 if (prueba.IdPaciente != informe.IdPaciente) return false;
 
                 await context.Informes.AddAsync(informe);
@@ -111,7 +107,8 @@ namespace HospiSafe.Services
                         i.Paciente.NumSS.Contains(buscador) ||
                         i.Paciente.DNI.Contains(buscador) ||
                         i.Paciente.Nombre.Contains(buscador) ||
-                        i.Paciente.Apellidos.Contains(buscador)
+                        i.Paciente.Apellidos.Contains(buscador) ||
+                        i.Prueba.TipoAnalisis.Contains(buscador)
                     )
                     .AsNoTracking()
                     .OrderByDescending(i => i.Fecha)
