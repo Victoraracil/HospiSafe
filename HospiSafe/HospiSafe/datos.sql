@@ -114,18 +114,18 @@ GO
 SET IDENTITY_INSERT Pruebas ON;
 
 INSERT INTO Pruebas
-(IdPrueba, Fecha, TipoAnalisis, Estado, Resultados, IdPaciente, IdUsuario)
+(IdPrueba, Fecha, TipoAnalisis, Estado, IdPaciente, IdUsuario)
 VALUES
-(1,'2025-01-10','Analítica general',0,NULL,1,2),
-(2,'2025-01-12','Análisis de sangre',1,'Glucosa normal',2,2),
-(3,'2025-01-15','Radiografía tórax',0,NULL,3,3),
-(4,'2025-01-18','Resonancia magnética',1,'Sin anomalías',4,3),
-(5,'2025-01-20','Electrocardiograma',1,'Ritmo normal',5,4),
-(6,'2025-01-22','Prueba alergias',0,NULL,6,4),
-(7,'2025-01-25','PCR COVID',1,'Negativo',7,5),
-(8,'2025-01-27','Analítica hormonal',0,NULL,8,5),
-(9,'2025-01-30','Prueba orina',1,'Valores normales',9,6),
-(10,'2025-02-02','Ecografía abdominal',0,NULL,10,6);
+(1,'2025-01-10','Analítica general',0,1,2),
+(2,'2025-01-12','Análisis de sangre',1,2,2),
+(3,'2025-01-15','Radiografía tórax',0,3,3),
+(4,'2025-01-18','Resonancia magnética',1,4,3),
+(5,'2025-01-20','Electrocardiograma',1,5,4),
+(6,'2025-01-22','Prueba alergias',0,6,4),
+(7,'2025-01-25','PCR COVID',1,7,5),
+(8,'2025-01-27','Analítica hormonal',0,8,5),
+(9,'2025-01-30','Prueba orina',1,9,6),
+(10,'2025-02-02','Ecografía abdominal',0,10,6);
 
 SET IDENTITY_INSERT Pruebas OFF;
 GO

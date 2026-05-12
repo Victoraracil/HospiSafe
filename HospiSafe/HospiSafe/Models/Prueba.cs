@@ -30,9 +30,6 @@ namespace HospiSafe.Models
         [Required]
         public EstadoPrueba Estado { get; set; }
 
-        [MaxLength(500)]
-        public string? Resultados { get; set; }
-
         [Required]
         public int IdPaciente { get; set; }
 

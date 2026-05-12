@@ -117,13 +117,6 @@ namespace HospiSafe.ViewModels
             set => SetProperty(ref _tipoAnalisis, value);
         }
 
-        private string _resultados = "";
-        public string Resultados
-        {
-            get => _resultados;
-            set => SetProperty(ref _resultados, value);
-        }
-
         private bool _formVisible;
         public bool FormVisible
         {
@@ -243,7 +236,6 @@ namespace HospiSafe.ViewModels
         {
             FormVisible = true;
             TipoAnalisis = "";
-            Resultados = "";
         }
 
         private void OcultarFormulario()
@@ -278,7 +270,6 @@ namespace HospiSafe.ViewModels
                     Fecha = DateTime.Now,
                     TipoAnalisis = TipoAnalisis.Trim(),
                     Estado = EstadoPrueba.Pendiente,
-                    Resultados = string.IsNullOrWhiteSpace(Resultados) ? null : Resultados.Trim(),
                     IdPaciente = PacienteSeleccionado.IdPaciente,
                     IdUsuario = UsuarioSeleccionado.IdUsuario
                 };

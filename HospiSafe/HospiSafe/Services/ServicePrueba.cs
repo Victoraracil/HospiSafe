@@ -37,8 +37,29 @@ namespace HospiSafe.Services
 
             using (var context = new GestorDBContext())
             {
+                // comprobaciones primero de que la prueba lleva asociado paciente y usuario/trabajador
+                var pacienteExiste = await context.Pacientes.FindAsync(prueba.IdPaciente);
+                if (pacienteExiste == null) return false;
+
+                var usuarioExiste = await context.Usuarios.FindAsync(prueba.IdUsuario);
+                if (usuarioExiste == null) return false;
+
+                // crear prueba
                 await context.Pruebas.AddAsync(prueba);
                 await context.SaveChangesAsync();
+
+                // crear informe vacio asociado a la prueba que se rellenará a posterior
+                var informe = new Informe
+                {
+                    IdPrueba = prueba.IdPrueba,
+                    IdPaciente = prueba.IdPaciente,
+                    Fecha = DateTime.UtcNow,
+                    Contenido = string.Empty
+                };
+
+                await context.Informes.AddAsync(informe);
+                await context.SaveChangesAsync();
+
                 return true;
             }
         }
