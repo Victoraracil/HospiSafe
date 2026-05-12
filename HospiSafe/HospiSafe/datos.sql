@@ -6,6 +6,12 @@ GO
 ------------------------------------------------
 
 -- Hijas
+IF OBJECT_ID('dbo.Informes', 'U') IS NOT NULL
+BEGIN
+    DELETE FROM Informes;
+    DBCC CHECKIDENT ('Informes', RESEED, 0);
+END;
+
 IF OBJECT_ID('dbo.Citas', 'U') IS NOT NULL
 BEGIN
     DELETE FROM Citas;
@@ -61,7 +67,7 @@ VALUES
 (11,'Admin','Admin','99999999Z','1990-01-01','600000000','admin@clinica.com','CD31EC8B6F7D41BB451512C7DE1A4166E1A0B2B5E992D464E87BBFF1CA06CA67C1D412C198A64A0D152C2946606BCD70',1), 
 (12,'Admin','Admin','99999999Z','1990-01-01','600000000','admin','CD31EC8B6F7D41BB451512C7DE1A4166E1A0B2B5E992D464E87BBFF1CA06CA67C1D412C198A64A0D152C2946606BCD70',1); 
 
-SET IDENTITY_INSERT Usuarios OFF
+SET IDENTITY_INSERT Usuarios OFF;
 GO
 
 ------------------------------------------------
@@ -120,18 +126,69 @@ VALUES
 (2,'2025-01-12','Análisis de sangre',1,2,2),
 (3,'2025-01-15','Radiografía tórax',0,3,3),
 (4,'2025-01-18','Resonancia magnética',1,4,3),
-(5,'2025-01-20','Electrocardiograma',1,5,4),
+(5,'2025-01-20','Electrocardiograma',2,5,4),
 (6,'2025-01-22','Prueba alergias',0,6,4),
-(7,'2025-01-25','PCR COVID',1,7,5),
-(8,'2025-01-27','Analítica hormonal',0,8,5),
-(9,'2025-01-30','Prueba orina',1,9,6),
-(10,'2025-02-02','Ecografía abdominal',0,10,6);
+(7,'2025-01-25','PCR COVID',2,7,5),
+(8,'2025-01-27','Analítica hormonal',1,8,5),
+(9,'2025-01-30','Prueba orina',2,9,6),
+(10,'2025-02-02','Ecografía abdominal',1,10,6);
 
 SET IDENTITY_INSERT Pruebas OFF;
 GO
 
 ------------------------------------------------
--- 6) FOREIGN KEYS
+-- 6) INFORMES
+------------------------------------------------
+SET IDENTITY_INSERT Informes ON;
+
+INSERT INTO Informes
+(IdInforme, Fecha, Contenido, IdPrueba, IdPaciente)
+VALUES
+(1,'2025-01-11',
+'Analítica general realizada correctamente. Valores hematológicos dentro de los parámetros normales. No se observan alteraciones relevantes.',
+1,1),
+
+(2,'2025-01-13',
+'Análisis de sangre completado. Se detecta ligera anemia ferropénica. Se recomienda seguimiento y dieta rica en hierro.',
+2,2),
+
+(3,'2025-01-16',
+'Radiografía de tórax sin hallazgos patológicos significativos. Campos pulmonares limpios y silueta cardíaca normal.',
+3,3),
+
+(4,'2025-01-19',
+'Resonancia magnética realizada con éxito. No se observan lesiones estructurales relevantes.',
+4,4),
+
+(5,'2025-01-21',
+'Electrocardiograma normal. Ritmo sinusal estable y ausencia de alteraciones cardíacas.',
+5,5),
+
+(6,'2025-01-23',
+'Prueba de alergias en proceso. Se identifican posibles reacciones leves al polen y ácaros.',
+6,6),
+
+(7,'2025-01-26',
+'PCR COVID negativa. Paciente sin síntomas compatibles en el momento de la prueba.',
+7,7),
+
+(8,'2025-01-28',
+'Analítica hormonal con niveles tiroideos ligeramente elevados. Se aconseja revisión endocrinológica.',
+8,8),
+
+(9,'2025-01-31',
+'Prueba de orina sin signos de infección urinaria. Parámetros bioquímicos normales.',
+9,9),
+
+(10,'2025-02-03',
+'Ecografía abdominal completada. Hígado, riñones y vesícula sin anomalías detectables.',
+10,10);
+
+SET IDENTITY_INSERT Informes OFF;
+GO
+
+------------------------------------------------
+-- 7) FOREIGN KEYS
 ------------------------------------------------
 
 -- Citas
@@ -154,6 +211,17 @@ FOREIGN KEY (IdUsuario) REFERENCES Usuarios(IdUsuario);
 IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'FK_Pruebas_Pacientes')
 ALTER TABLE Pruebas
 ADD CONSTRAINT FK_Pruebas_Pacientes
+FOREIGN KEY (IdPaciente) REFERENCES Pacientes(IdPaciente);
+
+-- Informes
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'FK_Informes_Pruebas')
+ALTER TABLE Informes
+ADD CONSTRAINT FK_Informes_Pruebas
+FOREIGN KEY (IdPrueba) REFERENCES Pruebas(IdPrueba);
+
+IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'FK_Informes_Pacientes')
+ALTER TABLE Informes
+ADD CONSTRAINT FK_Informes_Pacientes
 FOREIGN KEY (IdPaciente) REFERENCES Pacientes(IdPaciente);
 
 GO
