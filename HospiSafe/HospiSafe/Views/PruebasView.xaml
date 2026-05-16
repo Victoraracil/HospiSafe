@@ -361,9 +361,10 @@
                                 </StackPanel>
                             </Grid>
 
+                            <!-- informe inicial -->
                             <StackPanel Margin="0,0,0,10">
-                                <TextBlock Text="Resultados (opcional)" FontSize="11" Foreground="#475569" Margin="0,0,0,4"/>
-                                <TextBox Text="{Binding Resultados, UpdateSourceTrigger=PropertyChanged}"
+                                <TextBlock Text="Contenido del Informe inicial (opcional)" FontSize="11" Foreground="#475569" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding InformeContenido, UpdateSourceTrigger=PropertyChanged}"
                                          Height="60"
                                          Padding="10,6"
                                          VerticalAlignment="Top"
@@ -393,36 +394,70 @@
                     <!-- pruebas -->
                     <Border Grid.Row="2" BorderBrush="#e2e8f0" BorderThickness="1" CornerRadius="8">
                         <Grid>
-                            <!-- me sigue dando error, repasar como implementar -->
                             <DataGrid ItemsSource="{Binding Pruebas}"
-                                      SelectedItem="{Binding PruebaSeleccionada}" 
-                                      AutoGenerateColumns="False"
-                                      CanUserAddRows="False"
-                                      IsReadOnly="True"
-                                      HeadersVisibility="Column"
-                                      GridLinesVisibility="None"
-                                      RowHeaderWidth="0"
-                                      FontSize="12"
-                                      HorizontalScrollBarVisibility="Disabled"
-                                      VerticalScrollBarVisibility="Auto"
-                                      Background="White">
+                                  SelectedItem="{Binding PruebaSeleccionada}" 
+                                  AutoGenerateColumns="False"
+                                  CanUserAddRows="False"
+                                  IsReadOnly="True"
+                                  HeadersVisibility="Column"
+                                  GridLinesVisibility="None"
+                                  RowHeaderWidth="0"
+                                  FontSize="12"
+                                  HorizontalScrollBarVisibility="Disabled"
+                                  VerticalScrollBarVisibility="Auto"
+                                  Background="White">
 
+                                <!-- para centrar las cabeceras -->
+                                <DataGrid.ColumnHeaderStyle>
+                                    <Style TargetType="DataGridColumnHeader">
+                                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </Style>
+                                </DataGrid.ColumnHeaderStyle>
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="FECHA"
-                                                        Binding="{Binding Fecha, StringFormat=\{0:dd/MM/yyyy HH:mm\}}"
-                                                        Width="140"/>
-
+                                        Binding="{Binding Fecha, StringFormat=\{0:dd/MM/yyyy HH:mm\}}"
+                                        Width="1*"/>
                                     <DataGridTextColumn Header="TIPO DE ANÁLISIS"
-                                                        Binding="{Binding TipoAnalisis}"
-                                                        Width="180"/>
+                                        Binding="{Binding TipoAnalisis}"
+                                        Width="2*"/>
 
                                     <DataGridTextColumn Header="ESTADO"
-                                                        Binding="{Binding Estado}"
-                                                        Width="100"/>
-
-                                    <DataGridTextColumn Header="RESULTADOS"
-                                                        Binding="{Binding Resultados}"
-                                                        Width="*"/>
+                                        Binding="{Binding Estado}"
+                                        Width="1*"/>
+                                    <!-- muestra si la prueba esta informada o no -->
+                                    <DataGridTemplateColumn Header="INFORME"
+                                        Width="1*">
+                                        <DataGridTemplateColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Command="{Binding DataContext.VerInformeCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                    CommandParameter="{Binding}"
+                                                    Padding="8,4"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center">
+                                                    <TextBlock FontSize="14"
+                                                       FontWeight="Bold"
+                                                       Text="✓"
+                                                       Foreground="Green">
+                                                        <TextBlock.Style>
+                                                            <Style TargetType="TextBlock">
+                                                                <Setter Property="Text" Value="✓"/>
+                                                                <Setter Property="Foreground" Value="Green"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding Informes.Count}"
+                                                                            Value="0">
+                                                                        <Setter Property="Text" Value="✗"/>
+                                                                        <Setter Property="Foreground" Value="Red"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </TextBlock.Style>
+                                                    </TextBlock>
+                                                </Button>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
 

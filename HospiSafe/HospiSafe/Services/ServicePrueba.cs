@@ -25,30 +25,42 @@ namespace HospiSafe.Services
                     .AsNoTracking()
                     .Include(p => p.Paciente)
                     .Include(p => p.Usuario)
+                    .Include(p => p.Informes)
                     .OrderByDescending(p => p.Fecha)
                     .ToListAsync();
             }
         }
 
-        public async Task<bool> CrearPruebaAsync(Prueba prueba)
+        public async Task<Prueba?> ObtenerPorIdAsync(int idPrueba)
+        {
+            using (var context = new GestorDBContext())
+            {
+                return await context.Pruebas
+                    .AsNoTracking()
+                    .Include(p => p.Paciente)
+                    .Include(p => p.Usuario)
+                    .Include(p => p.Informes)
+                    .FirstOrDefaultAsync(p => p.IdPrueba == idPrueba);
+            }
+        }
+
+        public async Task<int> CrearPruebaAsync(Prueba prueba)
         {
             if (prueba == null)
                 throw new ArgumentNullException(nameof(prueba));
 
             using (var context = new GestorDBContext())
             {
-                // comprobaciones primero de que la prueba lleva asociado paciente y usuario/trabajador
                 var pacienteExiste = await context.Pacientes.FindAsync(prueba.IdPaciente);
-                if (pacienteExiste == null) return false;
+                if (pacienteExiste == null) return 0;
 
                 var usuarioExiste = await context.Usuarios.FindAsync(prueba.IdUsuario);
-                if (usuarioExiste == null) return false;
+                if (usuarioExiste == null) return 0;
 
-                // crear prueba
                 await context.Pruebas.AddAsync(prueba);
                 await context.SaveChangesAsync();
 
-                return true;
+                return prueba.IdPrueba;
             }
         }
 

@@ -72,28 +72,14 @@ namespace HospiSafe.ViewModels
             set => SetProperty(ref _pruebas, value);
         }
 
-        /* prueba seleccionada para a futuro que abrir el informe
-        private Prueba _pruebaSeleccionada;
+        //prueba seleccionada para a futuro que abrir el informe
+        private Prueba _PruebaSeleccionada;
         public Prueba PruebaSeleccionada
         {
-            get => _pruebaSeleccionada;
-            set
-            {
-                if (SetProperty(ref _pruebaSeleccionada, value))
-                {
-                    if (value != null)
-                        VerInformePrueba(value);
-                }
-            }
-        }*/
+            get => _PruebaSeleccionada;
+            set => SetProperty(ref _PruebaSeleccionada, value);
+        }
 
-        // usuarios para nuevo informe 
-        /*
-
-        REVISARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-        CARGAR TODOS USUARIOS?? SOLO PACIENTES? SOLO MEDICOS
-
-        */
         private ObservableCollection<Usuario> _usuarios = new ObservableCollection<Usuario>();
         public ObservableCollection<Usuario> Usuarios
         {
@@ -117,6 +103,14 @@ namespace HospiSafe.ViewModels
             set => SetProperty(ref _tipoAnalisis, value);
         }
 
+        // contenido opcional del informe inicial
+        private string _informeContenido = "";
+        public string InformeContenido
+        {
+            get => _informeContenido;
+            set => SetProperty(ref _informeContenido, value);
+        }
+
         private bool _formVisible;
         public bool FormVisible
         {
@@ -131,6 +125,7 @@ namespace HospiSafe.ViewModels
         public ICommand GuardarCommand { get; }
         public ICommand CancelarCommand { get; }
         public ICommand VolverCommand { get; }
+        public ICommand VerInformeCommand { get; }
 
         public PruebasViewModel(MainViewModel mainViewModel)
         {
@@ -142,6 +137,7 @@ namespace HospiSafe.ViewModels
             GuardarCommand = new RelayCommand(async _ => await GuardarAsync());
             CancelarCommand = new RelayCommand(_ => OcultarFormulario());
             VolverCommand = new RelayCommand(_ => Volver());
+            VerInformeCommand = new RelayCommand(param => AbrirInforme(param));
 
             FormVisible = false;
             BusquedaRealizada = false;
@@ -226,21 +222,49 @@ namespace HospiSafe.ViewModels
             }
         }
 
-        /* ver informe
-        private void VerInformePrueba(Prueba prueba)
+        private void AbrirInforme(object? parameter = null)
         {
-            //Implementar vista o box window con el informe
-        }*/
+            Prueba pruebaAbrir = null;
+
+            if (parameter is Prueba p)
+                pruebaAbrir = p;
+            else if (PruebaSeleccionada != null)
+                pruebaAbrir = PruebaSeleccionada;
+            else
+            {
+                MessageBox.Show("Selecciona una prueba.", "Aviso", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            if (pruebaAbrir.Informes == null || pruebaAbrir.Informes.Count == 0)
+            {
+                MessageBox.Show("Esta prueba aún no tiene informe.", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            try
+            {
+                //var dlg = new Views.InformeDialog(pruebaAbrir.IdPrueba);
+                //dlg.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al abrir informe: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Debug.WriteLine($"Error al abrir informe: {ex}");
+            }
+        }
 
         private void MostrarFormulario()
         {
             FormVisible = true;
             TipoAnalisis = "";
+            InformeContenido = "";
         }
 
         private void OcultarFormulario()
         {
             FormVisible = false;
+            InformeContenido = "";
         }
 
         private async Task GuardarAsync()
@@ -276,23 +300,54 @@ namespace HospiSafe.ViewModels
 
                 using (var service = new ServicePrueba())
                 {
-                    var creada = await service.CrearPruebaAsync(nueva);
-                }
+                    // crear prueba y obtener Id generado
+                    var idCreada = await service.CrearPruebaAsync(nueva);
 
-                // log
-                try
-                {
-                    using var slog = new ServiceLog();
-                    await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario,
-                        $"Creó prueba de laboratorio TipoAnalisis={TipoAnalisis} PacienteId={PacienteSeleccionado.IdPaciente}");
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine($"Error al registrar log: {ex}");
-                }
+                    if (idCreada > 0)
+                    {
+                        // solo crear informe si el contenido no está vacío tras trim
+                        var contenidoTrim = (InformeContenido ?? string.Empty).Trim();
+                        if (!string.IsNullOrEmpty(contenidoTrim))
+                        {
+                            var informe = new Informe
+                            {
+                                Fecha = DateTime.UtcNow,
+                                Contenido = contenidoTrim,
+                                IdPrueba = idCreada,
+                                IdPaciente = PacienteSeleccionado.IdPaciente
+                            };
 
-                OcultarFormulario();
-                CargarPruebasDelPaciente(PacienteSeleccionado.IdPaciente);
+                            using (var serviceInf = new ServiceInforme())
+                            {
+                                var creado = await serviceInf.CrearInformeAsync(informe);
+                                if (!creado)
+                                {
+                                    MessageBox.Show("Prueba creada, pero no se pudo crear el informe.", "Aviso", MessageBoxButton.OK, MessageBoxImage.Warning);
+                                }
+                            }
+                        }
+
+                        MessageBox.Show("Prueba creada correctamente.");
+
+                        try
+                        {
+                            using var slog = new ServiceLog();
+                            await slog.CrearLogAsync(SessionManager.CurrentUser?.IdUsuario,
+                                $"Creó prueba de laboratorio TipoAnalisis={TipoAnalisis} PacienteId={PacienteSeleccionado.IdPaciente}");
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"Error al registrar log: {ex}");
+                        }
+
+                        OcultarFormulario();
+                        CargarPruebasDelPaciente(PacienteSeleccionado.IdPaciente);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al crear la prueba.");
+                    }
+                }
             }
             catch (Exception ex)
             {
