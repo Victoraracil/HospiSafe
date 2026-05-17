@@ -5,5 +5,8 @@
     <Compile Update="Views\CitasView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\InformesView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -33,6 +33,10 @@
             <views:CitasView/>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type vm:InformesViewModel}">
+            <views:InformesView/>
+        </DataTemplate>
+
     </Window.Resources>
 
     <Grid>

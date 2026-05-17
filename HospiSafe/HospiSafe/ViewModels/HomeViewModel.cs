@@ -62,6 +62,7 @@ namespace HospiSafe.ViewModels
                 new Modulo { Title = "Citas", Icon = "📅", Description = "Programación y control de agenda médica" },
                 new Modulo { Title = "Laboratorio", Icon = "🔬", Description = "Resultados de laboratorios y diagnósticos" },
                 new Modulo { Title = "Radiologia", Icon = "⚡", Description = "Estudios de radiología y pruebas de imagen" },
+                new Modulo { Title = "Informes", Icon = "📄", Description = "Informes de las pruebas de cada paciente" },
                 new Modulo { Title = "Usuarios", Icon = "⚙️", Description = "Administración de personal y permisos" }
             };
 
@@ -84,6 +85,7 @@ namespace HospiSafe.ViewModels
                 "Citas" => _mainViewModel.PuedeVerCitas,
                 "Laboratorio" => _mainViewModel.PuedeVerLaboratorio,
                 "Radiologia" => _mainViewModel.PuedeVerRadiologia,
+                "Informes" => _mainViewModel.PuedeVerInformes,
                 "Usuarios" => _mainViewModel.PuedeVerUsuarios,
                 _ => false //default
             };
@@ -114,6 +116,10 @@ namespace HospiSafe.ViewModels
 
                 case "Citas":
                     _mainViewModel.CurrentViewModel = new CitasViewModel();
+                    break;
+
+                case "Informes":
+                    _mainViewModel.CurrentViewModel = new InformesViewModel(_mainViewModel);
                     break;
 
                 default:

@@ -52,6 +52,9 @@ namespace HospiSafe.ViewModels
         public bool PuedeVerCitas => PermisosService.PuedeAccederA(_currentUser, "Citas");
         public bool PuedeVerLaboratorio => PermisosService.PuedeAccederA(_currentUser, "Laboratorio");
         public bool PuedeVerRadiologia => PermisosService.PuedeAccederA(_currentUser, "Radiologia");
+        public bool PuedeVerInformes => PermisosService.PuedeAccederA(_currentUser, "Informes");
+
+        
 
 
         public MainViewModel()
@@ -79,6 +82,7 @@ namespace HospiSafe.ViewModels
             OnPropertyChanged(nameof(PuedeVerCitas));
             OnPropertyChanged(nameof(PuedeVerLaboratorio));
             OnPropertyChanged(nameof(PuedeVerRadiologia));
+            OnPropertyChanged(nameof(PuedeVerInformes));
         }
 
         private void VistaUsuarioUI(Usuario? user)

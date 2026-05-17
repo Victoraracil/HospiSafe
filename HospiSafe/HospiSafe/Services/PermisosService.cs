@@ -20,6 +20,7 @@ namespace HospiSafe.Services
                     "Citas",
                     "Laboratorio",
                     "Radiologia",
+                    "Informes",
                     "Usuarios"
                 }
             },
@@ -32,6 +33,7 @@ namespace HospiSafe.Services
                     "Citas",
                     "Laboratorio",
                     "Radiologia",
+                    "Informes",
                     "Usuarios"
                 }
             },
@@ -40,7 +42,8 @@ namespace HospiSafe.Services
             {
                 RolUsuario.TecnicoLaboratorio, new HashSet<string>
                 {
-                    "Laboratorio"
+                    "Laboratorio",
+                    "Informes"
                 }
             },
 
@@ -48,7 +51,8 @@ namespace HospiSafe.Services
             {
                 RolUsuario.TecnicoRayos, new HashSet<string>
                 {
-                    "Radiologia"
+                    "Radiologia",
+                    "Informes"
                 }
             }
         };

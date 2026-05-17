@@ -224,33 +224,47 @@ namespace HospiSafe.ViewModels
 
         private void AbrirInforme(object? parameter = null)
         {
-            Prueba pruebaAbrir = null;
+            Informe informeSeleccionado = null;
+            Prueba pruebaSeleccionada = null;
 
-            if (parameter is Prueba p)
-                pruebaAbrir = p;
+            if (parameter is Informe inf)
+            {
+                informeSeleccionado = inf;
+            }
+            else if (parameter is Prueba p)
+            {
+                pruebaSeleccionada = p;
+                // si la prueba tiene varios informes, el mas reciente que es el mas actualizado
+                informeSeleccionado = p.Informes?.OrderByDescending(i => i.Fecha).FirstOrDefault();
+            }
             else if (PruebaSeleccionada != null)
-                pruebaAbrir = PruebaSeleccionada;
+            {
+                pruebaSeleccionada = PruebaSeleccionada;
+                informeSeleccionado = PruebaSeleccionada.Informes?.OrderByDescending(i => i.Fecha).FirstOrDefault();
+            }
             else
             {
                 MessageBox.Show("Selecciona una prueba.", "Aviso", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
 
-            if (pruebaAbrir.Informes == null || pruebaAbrir.Informes.Count == 0)
+            var pacienteId = pruebaSeleccionada?.IdPaciente ?? informeSeleccionado?.IdPaciente;
+            var informeId = informeSeleccionado?.IdInforme;
+
+            if (pacienteId == null)
             {
-                MessageBox.Show("Esta prueba aún no tiene informe.", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("No se puede abrir el módulo de informes: falta información del paciente.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             try
             {
-                //var dlg = new Views.InformeDialog(pruebaAbrir.IdPrueba);
-                //dlg.ShowDialog();
+                _mainViewModel.CurrentViewModel = new InformesViewModel(_mainViewModel, pacienteId, informeId);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al abrir informe: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                Debug.WriteLine($"Error al abrir informe: {ex}");
+                MessageBox.Show("Error al abrir informes: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Debug.WriteLine($"Error AbrirInforme: {ex}");
             }
         }
 
