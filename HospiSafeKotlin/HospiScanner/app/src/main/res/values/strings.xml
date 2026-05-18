@@ -20,8 +20,10 @@
     <string name="valid_json">Valid JSON ✓</string>
     <string name="invalid_json_x">Invalid JSON ✗</string>
     <string name="invalid_json">Invalid JSON format</string>
-    <string name="copy_to_clipboard">Copy to Clipboard</string>
-    <string name="copied">Copied to clipboard</string>
+    <string name="copy_to_clipboard">Copiar al portapapeles</string>
+    <string name="copy_sensitive_title">Copiar datos sensibles</string>
+    <string name="copy_sensitive_message">El informe contiene datos medicos. Copialo solo si vas a pegarlo en un destino seguro.</string>
+    <string name="copied">Copiado al portapapeles</string>
     
     <!-- Errors -->
     <string name="error_camera_init">Failed to initialize camera</string>
@@ -31,7 +33,7 @@
     <!-- PIN Verification -->
     <string name="pin_verification_title">Verificación PIN</string>
     <string name="pin_gate_title">Acceso seguro al informe</string>
-    <string name="pin_gate_message">Este QR contiene datos medicos sensibles. Verifica la identidad del paciente para consultar el informe.</string>
+    <string name="pin_gate_message">Este QR contiene datos medicos sensibles. Verifica el PIN de acceso para consultar el informe.</string>
     <string name="verify_identity">Verificar identidad</string>
     <string name="pin_verification_message">Ingrese el PIN de 6 dígitos del paciente</string>
     <string name="pin_hint">PIN (6 dígitos)</string>
@@ -39,8 +41,7 @@
     <string name="cancel">Cancelar</string>
     <string name="pin_error_length">El PIN debe tener 6 dígitos</string>
     <string name="pin_error_incorrect">PIN incorrecto. Intente nuevamente</string>
-    <string name="pin_error_no_dni">No se encontró el campo DNI en el código QR</string>
-    <string name="pin_error_dni_short">El DNI debe tener al menos 6 dígitos</string>
+    <string name="pin_error_no_dni">No se encontro una credencial PIN valida en el codigo QR</string>
 
     <!-- Medical Report -->
     <string name="medical_report_title">Informe Médico</string>

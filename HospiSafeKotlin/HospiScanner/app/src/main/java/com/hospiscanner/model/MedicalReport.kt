@@ -99,7 +99,9 @@ data class MedicalReport(
                 "cama", "bed", "Cama", "Bed",
                 "notas", "notes", "observaciones", "observations", "comentarios", "comments",
                 "fecha_generacion", "generated_date", "generatedDate", "fecha_creacion", "creation_date",
-                "generado_por", "generated_by", "generatedBy", "creado_por", "created_by"
+                "generado_por", "generated_by", "generatedBy", "creado_por", "created_by",
+                "pin_hash", "pinHash", "access_pin_hash", "accessPinHash", "verification_hash", "verificationHash",
+                "pin", "access_pin", "accessPin"
             )
 
             val otherFields = jsonMap

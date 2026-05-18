@@ -15,7 +15,7 @@ This directory contains sample QR code data in JSON format for testing the Hospi
 }
 ```
 
-### Patient Information with DNI (for PIN verification)
+### Patient Information with DNI and PIN hash
 ```json
 {
   "patient_id": "P-12345",
@@ -23,12 +23,13 @@ This directory contains sample QR code data in JSON format for testing the Hospi
   "DNI": "12345678",
   "bed": "A-101",
   "status": "admitted",
-  "admission_date": "2026-02-18"
+  "admission_date": "2026-02-18",
+  "pin_hash": "481f6cc0518fbe4bfb0edb2a01d2c4bba956b630512252157ae1f410a459ccc1"
 }
 ```
-**Note:** When this QR code is scanned, it will prompt for PIN verification. The PIN is the first 6 digits of the DNI: `123456`
+**Note:** When this QR code is scanned, it will prompt for PIN verification. The entered PIN is checked against `pin_hash`.
 
-### Patient Information with DNI (alternative format)
+### Patient Information with DNI and plaintext development PIN
 ```json
 {
   "patient_id": "P-67890",
@@ -36,10 +37,11 @@ This directory contains sample QR code data in JSON format for testing the Hospi
   "dni": "98765432",
   "bed": "B-205",
   "status": "observation",
-  "admission_date": "2026-02-17"
+  "admission_date": "2026-02-17",
+  "pin": "654321"
 }
 ```
-**Note:** The PIN would be: `987654`
+**Note:** Plain `pin` is accepted for development fixtures only. Production QRs should use a hash field.
 
 ### Medical Record
 ```json
@@ -48,7 +50,8 @@ This directory contains sample QR code data in JSON format for testing the Hospi
   "patient": "Maria Garcia",
   "diagnosis": "Observation",
   "attending_physician": "Dr. Smith",
-  "room": "ICU-205"
+  "room": "ICU-205",
+  "pin_hash": "481f6cc0518fbe4bfb0edb2a01d2c4bba956b630512252157ae1f410a459ccc1"
 }
 ```
 

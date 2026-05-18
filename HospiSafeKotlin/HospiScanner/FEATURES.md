@@ -112,11 +112,11 @@ PIN OK│    PIN Cancel
 
 ### 4. 🔐 PIN Verification
 - **Patient Privacy**: 6-digit PIN verification for patient data
-- **DNI-based PIN**: PIN is first 6 digits of patient's DNI
+- **Hash-based PIN**: PIN is verified against an explicit QR credential hash
 - **Popup Dialog**: Clean, focused verification interface
 - **Error Handling**: Clear feedback for incorrect PIN attempts
-- **Flexible Field Names**: Supports DNI, dni, Dni, document_id, documentId
-- **Optional Feature**: Only activates when DNI field is present
+- **Flexible Field Names**: Supports pin_hash, pinHash, access_pin_hash, accessPinHash, verification_hash, verificationHash
+- **Sensitive Data Gate**: Medical QRs with DNI or clinical fields require a PIN credential
 
 ### 5. 🎨 UI/UX Design
 
@@ -244,10 +244,10 @@ Camera preview active
     → User points at QR code with DNI field
     → ML Kit detects code
     → ViewModel processes data
-    → Model parses JSON and extracts DNI
+    → Model parses JSON and extracts PIN hash
     → PIN dialog appears
     → User enters 6-digit PIN
-    → PIN validated against first 6 digits of DNI
+    → PIN hash is validated against QR credential hash
     → If correct: Result screen appears
     → If incorrect: Error message shown, retry
     → User can cancel to return to scanner

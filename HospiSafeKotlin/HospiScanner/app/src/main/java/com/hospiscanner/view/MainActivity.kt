@@ -20,14 +20,14 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.mlkit.vision.barcode.BarcodeScanning
-import com.google.mlkit.vision.barcode.common.Barcode
-import com.google.mlkit.vision.common.InputImage
 import com.hospiscanner.R
 import com.hospiscanner.data.database.AppDatabase
 import com.hospiscanner.databinding.ActivityMainBinding
 import com.hospiscanner.repository.MedicalReportRepository
 import com.hospiscanner.view.detail.ReportDetailActivity
+import com.hospiscanner.view.formatter.MedicalReportClipboardFormatter
 import com.hospiscanner.view.history.HistoryActivity
+import com.hospiscanner.view.scanner.QrCodeAnalyzer
 import com.hospiscanner.viewmodel.ScannerViewModel
 import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutorService
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity() {
         }
         
         binding.copyButton.setOnClickListener {
-            copyToClipboard()
+            confirmCopyToClipboard()
         }
 
         binding.historyButton.setOnClickListener {
@@ -173,7 +173,18 @@ class MainActivity : AppCompatActivity() {
             .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
             .build()
             .also {
-                it.setAnalyzer(cameraExecutor, QRCodeAnalyzer())
+                it.setAnalyzer(
+                    cameraExecutor,
+                    QrCodeAnalyzer(
+                        barcodeScanner = barcodeScanner,
+                        isScannerActive = { viewModel.isScannerActive.value == true },
+                        onQrDetected = { qrData ->
+                            runOnUiThread {
+                                viewModel.processQRCode(qrData)
+                            }
+                        }
+                    )
+                )
             }
         
         val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
@@ -189,42 +200,6 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.e(TAG, "Use case binding failed", e)
             viewModel.onScanError(getString(R.string.error_camera_init))
-        }
-    }
-    
-    private inner class QRCodeAnalyzer : ImageAnalysis.Analyzer {
-        @ExperimentalGetImage
-        override fun analyze(imageProxy: ImageProxy) {
-            val mediaImage = imageProxy.image
-            if (mediaImage != null && viewModel.isScannerActive.value == true) {
-                val image = InputImage.fromMediaImage(
-                    mediaImage,
-                    imageProxy.imageInfo.rotationDegrees
-                )
-                
-                barcodeScanner.process(image)
-                    .addOnSuccessListener { barcodes ->
-                        for (barcode in barcodes) {
-                            if (barcode.valueType == Barcode.TYPE_TEXT ||
-                                barcode.valueType == Barcode.TYPE_URL ||
-                                barcode.valueType == Barcode.TYPE_UNKNOWN) {
-                                barcode.rawValue?.let { qrData ->
-                                    runOnUiThread {
-                                        viewModel.processQRCode(qrData)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    .addOnFailureListener { e ->
-                        Log.e(TAG, "Barcode scanning failed", e)
-                    }
-                    .addOnCompleteListener {
-                        imageProxy.close()
-                    }
-            } else {
-                imageProxy.close()
-            }
         }
     }
     
@@ -266,7 +241,7 @@ class MainActivity : AppCompatActivity() {
             binding.detailButton.visibility = View.VISIBLE
 
             displayMedicalReport(result.medicalReport)
-            saveReportToHistory(result.medicalReport, result.rawData)
+            saveReportToHistory(result.medicalReport, result.formattedJson ?: result.rawData)
         } else {
             // Show error
             binding.statusIndicator.setBackgroundColor(
@@ -486,10 +461,25 @@ class MainActivity : AppCompatActivity() {
         showPermissionRequired()
     }
     
-    private fun copyToClipboard() {
+    private fun confirmCopyToClipboard() {
         val result = viewModel.scanResult.value ?: return
+        if (result.isValidJson && result.medicalReport != null) {
+            AlertDialog.Builder(this)
+                .setTitle(getString(R.string.copy_sensitive_title))
+                .setMessage(getString(R.string.copy_sensitive_message))
+                .setPositiveButton(getString(R.string.copy_to_clipboard)) { _, _ ->
+                    copyToClipboard(result)
+                }
+                .setNegativeButton(getString(R.string.cancel), null)
+                .show()
+        } else {
+            copyToClipboard(result)
+        }
+    }
+
+    private fun copyToClipboard(result: com.hospiscanner.model.ScanResult) {
         val textToCopy = if (result.isValidJson && result.medicalReport != null) {
-            formatMedicalReportForClipboard(result.medicalReport)
+            MedicalReportClipboardFormatter.format(result.medicalReport)
         } else {
             result.rawData
         }
@@ -501,68 +491,6 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, getString(R.string.copied), Toast.LENGTH_SHORT).show()
     }
     
-    private fun formatMedicalReportForClipboard(report: com.hospiscanner.model.MedicalReport): String {
-        val sb = StringBuilder()
-
-        sb.appendLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-        sb.appendLine("       INFORME MÉDICO")
-        if (report.hospital != null) {
-            sb.appendLine("   ${report.hospital}")
-        }
-        sb.appendLine("━━━━━━━━━━━━━━━━━━━━━━━━━━━━")
-        sb.appendLine()
-
-        sb.appendLine("📋 INFORMACIÓN DEL PACIENTE")
-        sb.appendLine("────────────────────────────")
-        report.patientName?.let { sb.appendLine("Nombre: $it") }
-        report.lastName?.let { sb.appendLine("Apellidos: $it") }
-        report.dni?.let { sb.appendLine("DNI: $it") }
-        report.age?.let { sb.appendLine("Edad: $it") }
-        report.gender?.let { sb.appendLine("Género: $it") }
-        report.bloodType?.let { sb.appendLine("Tipo de Sangre: $it") }
-        report.room?.let { sb.appendLine("Habitación: $it") }
-        report.bed?.let { sb.appendLine("Cama: $it") }
-        report.generatedDate?.let { sb.appendLine("Fecha de Generación: $it") }
-        report.generatedBy?.let { sb.appendLine("Generado Por: $it") }
-        sb.appendLine()
-
-        if (report.diagnosis != null || report.treatment != null ||
-            report.medications != null || report.allergies != null) {
-            sb.appendLine("🏥 INFORMACIÓN MÉDICA")
-            sb.appendLine("────────────────────────────")
-            report.diagnosis?.let { sb.appendLine("Diagnóstico: $it") }
-            report.treatment?.let { sb.appendLine("Tratamiento: $it") }
-            report.medications?.let { sb.appendLine("Medicamentos: $it") }
-            report.allergies?.let { sb.appendLine("⚠ ALERGIAS: $it") }
-            sb.appendLine()
-        }
-
-        if (report.doctor != null || report.date != null) {
-            sb.appendLine("👨‍⚕️ INFORMACIÓN ADICIONAL")
-            sb.appendLine("────────────────────────────")
-            report.doctor?.let { sb.appendLine("Médico: $it") }
-            report.date?.let { sb.appendLine("Fecha: $it") }
-            sb.appendLine()
-        }
-
-        report.additionalNotes?.let {
-            sb.appendLine("📝 NOTAS")
-            sb.appendLine("────────────────────────────")
-            sb.appendLine(it)
-            sb.appendLine()
-        }
-
-        if (report.otherFields.isNotEmpty()) {
-            sb.appendLine("ℹ️ OTROS DATOS")
-            sb.appendLine("────────────────────────────")
-            for ((key, value) in report.otherFields) {
-                sb.appendLine("$key: $value")
-            }
-        }
-
-        return sb.toString()
-    }
-
     private fun showPinDialog(result: com.hospiscanner.model.ScanResult) {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.pin_gate_title))
@@ -595,7 +523,7 @@ class MainActivity : AppCompatActivity() {
                     errorText.text = getString(R.string.pin_error_length)
                     errorText.visibility = View.VISIBLE
                 }
-                result.dni == null -> {
+                result.accessPinHash == null -> {
                     errorText.text = getString(R.string.pin_error_no_dni)
                     errorText.visibility = View.VISIBLE
                 }

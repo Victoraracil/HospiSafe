@@ -53,11 +53,9 @@ class ScannerViewModel : ViewModel() {
      */
     fun verifyPin(enteredPin: String): Boolean {
         val pending = _pendingScanResult.value ?: return false
-        val dni = pending.dni ?: return false
+        val pinHash = pending.accessPinHash ?: return false
         
-        val correctPin = QRDataParser.extractPinFromDNI(dni)
-        
-        return if (enteredPin == correctPin) {
+        return if (QRDataParser.verifyPin(enteredPin, pinHash)) {
             // PIN is correct, show the result
             _scanResult.value = pending
             _pendingScanResult.value = null

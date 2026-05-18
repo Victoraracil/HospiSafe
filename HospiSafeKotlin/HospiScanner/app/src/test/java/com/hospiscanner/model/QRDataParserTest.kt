@@ -106,4 +106,43 @@ class QRDataParserTest {
         assertTrue(result.isValidJson)
         assertNotNull(result.jsonData)
     }
+
+    @Test
+    fun parseSensitiveMedicalJsonWithoutPinHash_ReturnsInvalidScanResult() {
+        // Given
+        val medicalJson = """{"DNI":"12345678","diagnosis":"Flu"}"""
+
+        // When
+        val result = QRDataParser.parseQRData(medicalJson)
+
+        // Then
+        assertFalse(result.isValidJson)
+        assertEquals("Medical QR is missing a PIN hash", result.errorMessage)
+    }
+
+    @Test
+    fun parseSensitiveMedicalJsonWithPinHash_RequiresVerification() {
+        // Given
+        val pinHash = QRDataParser.hashPin("654321")
+        val medicalJson = """{"DNI":"12345678","diagnosis":"Flu","pin_hash":"$pinHash"}"""
+
+        // When
+        val result = QRDataParser.parseQRData(medicalJson)
+
+        // Then
+        assertTrue(result.isValidJson)
+        assertTrue(result.requiresPinVerification)
+        assertEquals(pinHash, result.accessPinHash)
+        assertFalse(result.formattedJson.orEmpty().contains("pin_hash"))
+    }
+
+    @Test
+    fun verifyPin_UsesExplicitHashInsteadOfDni() {
+        // Given
+        val pinHash = QRDataParser.hashPin("654321")
+
+        // Then
+        assertTrue(QRDataParser.verifyPin("654321", pinHash))
+        assertFalse(QRDataParser.verifyPin("123456", pinHash))
+    }
 }
