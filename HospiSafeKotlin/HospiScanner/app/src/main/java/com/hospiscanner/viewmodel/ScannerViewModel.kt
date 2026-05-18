@@ -11,6 +11,9 @@ import com.hospiscanner.model.ScanResult
  */
 class ScannerViewModel : ViewModel() {
     
+    private var failedPinAttempts = 0
+    private var pinLockUntil = 0L
+    
     // LiveData for scan result
     private val _scanResult = MutableLiveData<ScanResult?>()
     val scanResult: LiveData<ScanResult?> = _scanResult
@@ -52,16 +55,26 @@ class ScannerViewModel : ViewModel() {
      * Verify PIN and show result if correct
      */
     fun verifyPin(enteredPin: String): Boolean {
+        if (System.currentTimeMillis() < pinLockUntil) {
+            return false
+        }
+
         val pending = _pendingScanResult.value ?: return false
         val pinHash = pending.accessPinHash ?: return false
         
         return if (QRDataParser.verifyPin(enteredPin, pinHash)) {
             // PIN is correct, show the result
+            failedPinAttempts = 0
             _scanResult.value = pending
             _pendingScanResult.value = null
             true
         } else {
             // PIN is incorrect
+            failedPinAttempts++
+            if (failedPinAttempts >= 3) {
+                pinLockUntil = System.currentTimeMillis() + 30000
+                failedPinAttempts = 0
+            }
             false
         }
     }

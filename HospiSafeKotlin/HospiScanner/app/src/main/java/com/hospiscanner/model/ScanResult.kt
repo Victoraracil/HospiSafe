@@ -120,10 +120,11 @@ object QRDataParser {
             if (!value.isNullOrBlank()) return value.lowercase()
         }
 
-        for (key in PIN_PLAIN_TEXT_KEYS) {
-            val value = jsonMap[key]?.toString()?.trim()
-            if (!value.isNullOrBlank()) return hashPin(value)
-        }
+        // quitado por seguridad, no se debe enviar pin en claro en el qr
+        // for (key in PIN_PLAIN_TEXT_KEYS) {
+        //     val value = jsonMap[key]?.toString()?.trim()
+        //     if (!value.isNullOrBlank()) return hashPin(value)
+        // }
 
         return null
     }

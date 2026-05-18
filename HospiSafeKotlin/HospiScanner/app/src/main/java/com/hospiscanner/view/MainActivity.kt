@@ -61,6 +61,10 @@ class MainActivity : AppCompatActivity() {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setFlags(
+            android.view.WindowManager.LayoutParams.FLAG_SECURE,
+            android.view.WindowManager.LayoutParams.FLAG_SECURE
+        )
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         
@@ -258,7 +262,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun saveReportToHistory(report: com.hospiscanner.model.MedicalReport, rawData: String) {
         lifecycleScope.launch {
-            val savedId = reportRepository.saveScannedReport(report, rawData)
+            // no guardamos el pin_hash en el historial
+            val safeRawData = rawData.replace(
+                Regex("\"?(pin_hash|pinHash|access_pin_hash|accessPinHash|verification_hash|verificationHash)\"?\\s*[:=]\\s*\"[^\"]*\""),
+                "\"$1\":\"***\""
+            )
+            val savedId = reportRepository.saveScannedReport(report, safeRawData)
             if (savedId > 0) {
                 currentSavedReportId = savedId
                 Toast.makeText(this@MainActivity, getString(R.string.report_saved), Toast.LENGTH_SHORT).show()
