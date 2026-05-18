@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary Colors - Vibrant Blue -->
-    <color name="primary">#2196F3</color>
-    <color name="primary_dark">#1976D2</color>
-    <color name="primary_light">#BBDEFB</color>
+    <!-- Primary Colors - Clinical Blue/Teal -->
+    <color name="primary">#1565C0</color>
+    <color name="primary_dark">#0D47A1</color>
+    <color name="primary_light">#D7E9FF</color>
     
     <!-- Accent Colors - Vibrant Teal -->
-    <color name="accent">#00BCD4</color>
-    <color name="accent_dark">#0097A7</color>
+    <color name="accent">#00A5A5</color>
+    <color name="accent_dark">#00796B</color>
     
     <!-- Success Colors - Vibrant Green -->
-    <color name="success">#4CAF50</color>
+    <color name="success">#2E7D32</color>
+    <color name="success_dark">#1B5E20</color>
     <color name="success_light">#81C784</color>
+    <color name="success_container">#E3F4E7</color>
     
     <!-- Error Colors - Vibrant Red -->
     <color name="error">#F44336</color>
     <color name="error_light">#E57373</color>
     
     <!-- Warning Colors - Vibrant Orange -->
-    <color name="warning">#FF9800</color>
+    <color name="warning">#F9A825</color>
+    <color name="allergy">#B3261E</color>
+    <color name="allergy_container">#FCEEEE</color>
     
     <!-- Background Colors -->
-    <color name="background">#FFFFFF</color>
-    <color name="surface">#F5F5F5</color>
-    <color name="surface_variant">#E0E0E0</color>
+    <color name="background">#F7FAFC</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#E0E7EF</color>
     
     <!-- Dark Theme Colors -->
     <color name="card_dark_background">#1E1E1E</color>

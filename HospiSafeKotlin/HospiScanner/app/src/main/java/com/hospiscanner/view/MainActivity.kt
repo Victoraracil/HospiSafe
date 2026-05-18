@@ -4,27 +4,32 @@ import android.Manifest
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import com.hospiscanner.R
+import com.hospiscanner.data.database.AppDatabase
 import com.hospiscanner.databinding.ActivityMainBinding
+import com.hospiscanner.repository.MedicalReportRepository
+import com.hospiscanner.view.detail.ReportDetailActivity
+import com.hospiscanner.view.history.HistoryActivity
 import com.hospiscanner.viewmodel.ScannerViewModel
+import kotlinx.coroutines.launch
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -37,6 +42,10 @@ class MainActivity : AppCompatActivity() {
     private var camera: Camera? = null
     private var imageAnalyzer: ImageAnalysis? = null
     private lateinit var cameraExecutor: ExecutorService
+    private var currentSavedReportId: Long? = null
+    private val reportRepository: MedicalReportRepository by lazy {
+        MedicalReportRepository(AppDatabase.getInstance(applicationContext).medicalReportDao())
+    }
     
     private val barcodeScanner = BarcodeScanning.getClient()
     
@@ -100,6 +109,22 @@ class MainActivity : AppCompatActivity() {
         
         binding.copyButton.setOnClickListener {
             copyToClipboard()
+        }
+
+        binding.historyButton.setOnClickListener {
+            startActivity(Intent(this, HistoryActivity::class.java))
+        }
+
+        binding.detailButton.setOnClickListener {
+            val reportId = currentSavedReportId
+            if (reportId != null) {
+                startActivity(
+                    Intent(this, ReportDetailActivity::class.java)
+                        .putExtra(ReportDetailActivity.EXTRA_REPORT_ID, reportId)
+                )
+            } else {
+                Toast.makeText(this, getString(R.string.report_not_found), Toast.LENGTH_SHORT).show()
+            }
         }
     }
     
@@ -212,6 +237,7 @@ class MainActivity : AppCompatActivity() {
         binding.resultLayout.visibility = View.GONE
         binding.permissionLayout.visibility = View.GONE
         binding.progressBar.visibility = View.GONE
+        currentSavedReportId = null
         
         // Restart camera if needed
         if (cameraProvider != null) {
@@ -237,8 +263,10 @@ class MainActivity : AppCompatActivity() {
             // Show medical report content
             binding.medicalReportContent.visibility = View.VISIBLE
             binding.errorCard.visibility = View.GONE
+            binding.detailButton.visibility = View.VISIBLE
 
             displayMedicalReport(result.medicalReport)
+            saveReportToHistory(result.medicalReport, result.rawData)
         } else {
             // Show error
             binding.statusIndicator.setBackgroundColor(
@@ -247,8 +275,19 @@ class MainActivity : AppCompatActivity() {
             binding.statusIndicatorText.text = getString(R.string.invalid_json_x)
             binding.medicalReportContent.visibility = View.GONE
             binding.errorCard.visibility = View.VISIBLE
+            binding.detailButton.visibility = View.GONE
             binding.errorText.text = result.errorMessage ?: getString(R.string.invalid_json)
             binding.rawDataText.text = result.rawData
+        }
+    }
+
+    private fun saveReportToHistory(report: com.hospiscanner.model.MedicalReport, rawData: String) {
+        lifecycleScope.launch {
+            val savedId = reportRepository.saveScannedReport(report, rawData)
+            if (savedId > 0) {
+                currentSavedReportId = savedId
+                Toast.makeText(this@MainActivity, getString(R.string.report_saved), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -525,6 +564,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showPinDialog(result: com.hospiscanner.model.ScanResult) {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.pin_gate_title))
+            .setMessage(getString(R.string.pin_gate_message))
+            .setPositiveButton(getString(R.string.verify_identity)) { _, _ ->
+                showPinEntryDialog(result)
+            }
+            .setNegativeButton(getString(R.string.cancel)) { _, _ ->
+                viewModel.cancelPinVerification()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun showPinEntryDialog(result: com.hospiscanner.model.ScanResult) {
         val dialogView = layoutInflater.inflate(R.layout.dialog_pin_verification, null)
         val pinInput = dialogView.findViewById<TextInputEditText>(R.id.pinInput)
         val errorText = dialogView.findViewById<android.widget.TextView>(R.id.errorText)

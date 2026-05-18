@@ -13,6 +13,8 @@
     <!-- Result Screen -->
     <string name="result_title">Scan Result</string>
     <string name="scan_again">Scan Again</string>
+    <string name="view_history">Ver historial</string>
+    <string name="view_detail">Ver detalle</string>
     <string name="raw_data">Raw Data:</string>
     <string name="parsed_json">Parsed JSON:</string>
     <string name="valid_json">Valid JSON ✓</string>
@@ -28,6 +30,9 @@
     
     <!-- PIN Verification -->
     <string name="pin_verification_title">Verificación PIN</string>
+    <string name="pin_gate_title">Acceso seguro al informe</string>
+    <string name="pin_gate_message">Este QR contiene datos medicos sensibles. Verifica la identidad del paciente para consultar el informe.</string>
+    <string name="verify_identity">Verificar identidad</string>
     <string name="pin_verification_message">Ingrese el PIN de 6 dígitos del paciente</string>
     <string name="pin_hint">PIN (6 dígitos)</string>
     <string name="confirm">Confirmar</string>
@@ -59,5 +64,21 @@
     <string name="other_info">Información Adicional</string>
     <string name="generated_date">Fecha de Generación</string>
     <string name="generated_by">Generado Por</string>
+    <string name="back">Volver</string>
+    <string name="history_title">Historial clinico</string>
+    <string name="history_subtitle">Informes escaneados de HospiSafe Desktop</string>
+    <string name="search_reports">Buscar paciente, DNI, analisis o diagnostico</string>
+    <string name="history_empty_title">Sin informes guardados</string>
+    <string name="history_empty_message">Los informes validados con PIN apareceran aqui automaticamente.</string>
+    <string name="patient_without_name">Paciente sin nombre</string>
+    <string name="date_not_available">Fecha no disponible</string>
+    <string name="dni_not_available">DNI no disponible</string>
+    <string name="scanned_at_format">Escaneado %1$s</string>
+    <string name="report_meta_format">DNI %1$s · %2$s</string>
+    <string name="status_validated">Validado</string>
+    <string name="care_team">Equipo responsable</string>
+    <string name="report_not_found">No se encontro el informe</string>
+    <string name="report_saved">Informe guardado en historial</string>
+    <string name="duplicate_report_saved">Este informe ya estaba en el historial</string>
 
 </resources>

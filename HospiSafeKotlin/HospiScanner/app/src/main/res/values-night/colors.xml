@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Night mode colors -->
-    <color name="primary">#42A5F5</color>
-    <color name="primary_dark">#1976D2</color>
-    <color name="primary_light">#1E88E5</color>
+    <color name="primary">#82B1FF</color>
+    <color name="primary_dark">#0B2447</color>
+    <color name="primary_light">#163A5F</color>
     
-    <color name="accent">#26C6DA</color>
-    <color name="accent_dark">#00ACC1</color>
+    <color name="accent">#4DD0E1</color>
+    <color name="accent_dark">#26A69A</color>
+    <color name="success">#81C784</color>
+    <color name="success_dark">#A5D6A7</color>
+    <color name="success_container">#153D22</color>
+    <color name="error">#FFB4AB</color>
+    <color name="error_light">#F2B8B5</color>
+    <color name="warning">#FFD54F</color>
+    <color name="allergy">#FFB4AB</color>
+    <color name="allergy_container">#4A1512</color>
     
-    <color name="background">#121212</color>
-    <color name="surface">#1E1E1E</color>
-    <color name="surface_variant">#2C2C2C</color>
+    <color name="background">#101418</color>
+    <color name="surface">#171C20</color>
+    <color name="surface_variant">#2B3238</color>
+    <color name="card_dark_background">#171C20</color>
+    <color name="card_darker_background">#101418</color>
+    <color name="text_dark_primary">#E0E3E7</color>
+    <color name="text_dark_secondary">#AAB2BC</color>
     
-    <color name="text_primary">#FFFFFF</color>
-    <color name="text_secondary">#B0B0B0</color>
-    <color name="text_hint">#757575</color>
+    <color name="text_primary">#E0E3E7</color>
+    <color name="text_secondary">#AAB2BC</color>
+    <color name="text_hint">#7F8892</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="overlay_dark">#99000000</color>
+    <color name="overlay_light">#66000000</color>
 </resources>
